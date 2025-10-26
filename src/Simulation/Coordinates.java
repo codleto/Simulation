@@ -8,7 +8,9 @@ public class Coordinates {
     public  Vertical vertical;
     public final  Integer gorizantal;
 
-    public void gorizantalRight(Creature creature) {}
+    public void gorizantalRight(Integer right) {
+        Integer x = gorizantal + 1;
+    }
 
     public Coordinates(Vertical vertical, Integer gorizantal) {
         this.vertical = vertical;
