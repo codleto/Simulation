@@ -1,24 +1,47 @@
 package Simulation;
 
-import Simulation.Animal.Creature;
-import Simulation.Animal.Herbivore;
-import Simulation.Animal.Predator;
-
 import java.util.HashMap;
+import java.util.Random;
 
 public class Map {
-    HashMap<Cordinates, Entity> map = new HashMap<>();
+    Random r = new Random();
+    public HashMap<Coordinates, Entity> map = new HashMap<>();
 
 
-    public void setEntity(Cordinates cordinates, Entity entity) {
-        map.put(cordinates, entity);
+
+    public void setEntity(Entity entity) {
+        genPosition(entity);
+        map.put(entity.coordinates, entity);
     }
 
-    public void change(Entity entity, int id){
-
+    public void setEntityTwo(Entity entity) {
+        genPosition(entity);
+        map.put(entity.coordinates, entity);
     }
-    public Entity getMap(File file, int a) {
-        return map.get(new Cordinates(file, a));
+
+    public Entity getMap(int vertical, int gorizontal) {
+        return map.get(new Coordinates(vertical, gorizontal));
+    }
+
+    public void genPosition(Entity entity) {
+        while (true) {
+            int vertical = r.nextInt(5) + 1;
+            int gorizantal = r.nextInt(5) + 1;
+
+            if (map.get(new Coordinates(vertical, gorizantal)) == null) {
+                entity.coordinates = new Coordinates(vertical, gorizantal);
+                break;
+            }
+        }
+    }
+
+    public String getSkins(int vertical, int gorizontal) {
+        Entity skin = map.get(new Coordinates(vertical, gorizontal));
+        return skin.getSkin();
+    }
+
+    public void clear(){
+        map.clear();
     }
 }
 
