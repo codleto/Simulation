@@ -1,18 +1,18 @@
 package Simulation;
 
-import Simulation.Animal.Creature;
+import Simulation.entity.Entity;
 
 import java.util.Objects;
 
 public class Coordinates {
-    public  Vertical vertical;
+    public Integer vertical;
     public final  Integer gorizantal;
 
-    public void gorizantalRight(Integer right) {
-        Integer x = gorizantal + 1;
+    public static void genPositionTwo(Entity entity){
+        entity.coordinates = new Coordinates(5,5);
     }
 
-    public Coordinates(Vertical vertical, Integer gorizantal) {
+    public Coordinates(Integer vertical, Integer gorizantal) {
         this.vertical = vertical;
         this.gorizantal = gorizantal;
     }
