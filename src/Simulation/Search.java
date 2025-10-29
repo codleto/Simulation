@@ -9,5 +9,9 @@ public class Search {
     public static boolean estPrepatstvie(Map map) {
         return map != null;
     }
+
+    public static boolean izuchKlet(Coordinates coordinates) {
+        return !obshiy.contains(coordinates);
+    }
 }
 
