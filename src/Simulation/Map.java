@@ -1,42 +1,37 @@
 package Simulation;
 
+import Simulation.entity.Entity;
+
 import java.util.HashMap;
 import java.util.Random;
 
 public class Map {
+
     Random r = new Random();
     public HashMap<Coordinates, Entity> map = new HashMap<>();
 
-
-
     public void setEntity(Entity entity) {
-        genPosition(entity);
-        map.put(entity.coordinates, entity);
+        Coordinates c = genPosition();
+        map.put(c, entity);
     }
 
-    public void setEntityTwo(Entity entity) {
-        genPosition(entity);
-        map.put(entity.coordinates, entity);
+    public Entity getMap(int vertical, int horizontal) {
+        return map.get(new Coordinates(vertical, horizontal));
     }
 
-    public Entity getMap(int vertical, int gorizontal) {
-        return map.get(new Coordinates(vertical, gorizontal));
-    }
-
-    public void genPosition(Entity entity) {
+    public Coordinates genPosition() {
         while (true) {
-            int vertical = r.nextInt(5) + 1;
-            int gorizantal = r.nextInt(5) + 1;
+            int vertical = r.nextInt(5);
+            int horizontal = r.nextInt(5);
 
-            if (map.get(new Coordinates(vertical, gorizantal)) == null) {
-                entity.coordinates = new Coordinates(vertical, gorizantal);
-                break;
+            if (map.get(new Coordinates(vertical, horizontal)) == null) {
+                return new Coordinates(vertical, horizontal);
             }
         }
     }
 
-    public String getSkins(int vertical, int gorizontal) {
-        Entity skin = map.get(new Coordinates(vertical, gorizontal));
+    public String getSkins(int vertical, int horizontal) {
+        Entity skin = map.get(new Coordinates(vertical, horizontal));
         return skin.getSkin();
     }
 
