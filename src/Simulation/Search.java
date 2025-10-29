@@ -1,6 +1,9 @@
 package Simulation;
 
-public class Search {
+import java.util.ArrayList;
 
+public class Search {
+    public static ArrayList<Coordinates> obshiy = new ArrayList<>();
+    public static ArrayList<ArrayList<Coordinates>> putivod = new ArrayList<>();
 }
 
