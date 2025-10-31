@@ -15,4 +15,8 @@ public class Search {
     public static boolean isCellVisited(Coordinates coordinates) {
         return !visitedCells.contains(coordinates);
     }
+
+    public static boolean hasGrass(Map map, Coordinates coordinates){
+        return map.getEntity(coordinates) instanceof Grass;
+    }
 }
