@@ -12,4 +12,7 @@ public class Search {
     public static HashMap<Coordinates, Coordinates> parentMap = new HashMap<>();
     public static ArrayList<Coordinates> pathToFood = new ArrayList<>();
 
+    public static boolean isCellVisited(Coordinates coordinates) {
+        return !visitedCells.contains(coordinates);
+    }
 }
