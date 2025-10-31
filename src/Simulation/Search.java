@@ -9,6 +9,6 @@ import static Simulation.Map.granicPole;
 
 public class Search {
     public static ArrayList<Coordinates> visitedCells = new ArrayList<>();
-
+    public static HashMap<Coordinates, Coordinates> parentMap = new HashMap<>();
 
 }
