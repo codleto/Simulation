@@ -78,7 +78,7 @@ public class Search {
                     }
                 } else if (hasGrass(map, s)) {
                     parentMap.put(s, c);
-                    //findPathToFood(s);
+                    findPathToFood(s);
                     break;
 
                 }
@@ -88,6 +88,21 @@ public class Search {
         }
 
 
+
+    }
+
+    public static void findPathToFood(Coordinates coordinates){
+        pathToFood.add(coordinates);
+        Coordinates c = coordinates;
+        while(true) {
+            if (!parentMap.containsValue(c)) {
+                Coordinates p = parentMap.get(c);
+                pathToFood.add(p);
+                c = p;
+            }else{
+                break;
+            }
+        }
 
     }
 }
