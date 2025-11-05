@@ -1,13 +1,14 @@
 package Simulation;
 
 import Simulation.entity.Animal.Creature;
+
 import Simulation.entity.Entity;
 import java.util.HashMap;
 import java.util.Random;
 
 public class Map {
 
-    static Random  r = new Random();
+    static Random random = new Random();
 
     public static HashMap<Coordinates, Entity> map = new HashMap<>();
 
@@ -16,36 +17,52 @@ public class Map {
         entity.coordinates = c;
         map.put(c, entity);
     }
-    public static Entity getEntity(Coordinates coordinates){
-        return map.get(coordinates);
-    }
-
-    public static void chooch(Coordinates oldCoordinates , Coordinates newCoordinates){
-        Entity e = map.get(oldCoordinates);
-        map.remove(oldCoordinates);
-        map.put(newCoordinates, e);
-    }
-
-
-    public static boolean granicPole(Coordinates coordinates) {
-        return (coordinates.vertical > 4 || coordinates.vertical < 0 &&
-            coordinates.horizontal > 4 || coordinates.horizontal < 0);
-    }
-
-    public static Entity getMap(int vertical, int horizontal) {
-        return map.get(new Coordinates(vertical, horizontal));
-    }
-
 
     public static Coordinates genPosition() {
         while (true) {
-            int vertical = r.nextInt(5);
-            int horizontal = r.nextInt(5);
+            int vertical = random.nextInt(5);
+            int horizontal = random.nextInt(5);
 
             if (map.get(new Coordinates(vertical, horizontal)) == null) {
                 return new Coordinates(vertical, horizontal);
             }
         }
+    }
+
+    public static Entity getEntity(Coordinates coordinates){
+        return map.get(coordinates);
+    }
+
+    public static boolean hasFoodFor(Creature creature){
+        for(java.util.Map.Entry<Coordinates, Entity> entry : map.entrySet()){
+            Coordinates eating = entry.getKey();
+            if(creature.eat(eating)){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public static void step(Coordinates oldCoordinates , Coordinates newCoordinates, Creature creature){
+        Entity animal = map.get(oldCoordinates);
+        Entity target = map.get(newCoordinates);
+
+        map.remove(oldCoordinates);
+
+        if( target != null && creature.eat(newCoordinates)){
+            map.remove(newCoordinates);
+        }
+        creature.coordinates = newCoordinates;
+        map.put(newCoordinates, animal);
+    }
+
+
+    public static boolean granicPole(Coordinates coordinates) {
+        return (coordinates.vertical > 4 || coordinates.vertical < 0 || coordinates.horizontal > 4 || coordinates.horizontal < 0);
+    }
+
+    public static Entity getMap(int vertical, int horizontal) {
+        return map.get(new Coordinates(vertical, horizontal));
     }
 
     public static String getSkins(int vertical, int horizontal) {
