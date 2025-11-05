@@ -1,10 +1,12 @@
 package Simulation;
 
-import Simulation.entity.StaticObject.Grass;
+import Simulation.entity.Animal.Creature;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+
+import static Simulation.Map.hasFoodFor;
 import static Simulation.Map.granicPole;
 
 public class Search {
@@ -19,19 +21,20 @@ public class Search {
     pathToFood.clear();
 }
 
-    public boolean isCellVisited(Coordinates coordinates) {
+    public boolean isCellNotVisited(Coordinates coordinates) {
         return !visitedCells.contains(coordinates);
     }
 
-    public static boolean hasGrass(Coordinates coordinates){
-        return Map.getEntity(coordinates) instanceof Grass;
-    }
 
-    public void runSearch(Coordinates coordinates) {
+
+    public void runSearch(Coordinates coordinates, Creature creature) {
         start = coordinates;
         visitedCells.add(coordinates);
         int index = 0;
         while(true){
+            if(hasFoodFor(creature)){
+                break;
+            }
             if(index >= visitedCells.size()){
                 break;
             }
@@ -40,11 +43,11 @@ public class Search {
             Coordinates childCell = new Coordinates(parentCell.vertical, parentCell.horizontal +1);
             if(!granicPole(childCell)) {
                 if (Map.getMap(childCell.vertical, childCell.horizontal) == null) {
-                    if (isCellVisited(childCell)) {
+                    if (isCellNotVisited(childCell)) {
                         visitedCells.add(childCell);
                         parentMap.put(childCell, parentCell);
                     }
-                } else if (hasGrass(childCell)) {
+                } else if (creature.eat(childCell)) {
                     parentMap.put(childCell, parentCell);
                     findPathToFood(childCell);
                     break;
@@ -54,11 +57,11 @@ public class Search {
             childCell = new Coordinates(parentCell.vertical + 1, parentCell.horizontal);
             if(!granicPole(childCell)) {
                 if (Map.getMap(childCell.vertical, childCell.horizontal) == null) {
-                    if (isCellVisited(childCell)) {
+                    if (isCellNotVisited(childCell)) {
                         visitedCells.add(childCell);
                         parentMap.put(childCell, parentCell);
                     }
-                } else if (hasGrass(childCell)) {
+                } else if (creature.eat(childCell)) {
                     parentMap.put(childCell, parentCell);
                     findPathToFood(childCell);
                     break;
@@ -69,11 +72,11 @@ public class Search {
             childCell = new Coordinates(parentCell.vertical, parentCell.horizontal -1);
             if(!granicPole(childCell)) {
                 if (Map.getMap(childCell.vertical, childCell.horizontal) == null) {
-                    if (isCellVisited(childCell)) {
+                    if (isCellNotVisited(childCell)) {
                         visitedCells.add(childCell);
                         parentMap.put(childCell, parentCell);
                     }
-                } else if (hasGrass(childCell)) {
+                } else if (creature.eat(childCell)) {
                     parentMap.put(childCell, parentCell);
                     findPathToFood(childCell);
                     break;
@@ -84,11 +87,11 @@ public class Search {
             childCell = new Coordinates(parentCell.vertical -1, parentCell.horizontal);
             if(!granicPole(childCell)) {
                 if (Map.getMap(childCell.vertical, childCell.horizontal) == null) {
-                    if (isCellVisited(childCell)) {
+                    if (isCellNotVisited(childCell)) {
                         visitedCells.add(childCell);
                         parentMap.put(childCell, parentCell);
                     }
-                } else if (hasGrass(childCell)) {
+                } else if (creature.eat(childCell)) {
                     parentMap.put(childCell, parentCell);
                     findPathToFood(childCell);
                     break;
