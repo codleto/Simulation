@@ -15,7 +15,9 @@ public class Renderer {
                 }System.out.print("\u001B[0m");
 
             }
+
         }
+        System.out.println(" ");
 
     }
 }

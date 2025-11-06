@@ -2,7 +2,10 @@ package Simulation;
 
 import Simulation.entity.Animal.Creature;
 
+import Simulation.entity.Animal.Herbivore;
 import Simulation.entity.Entity;
+import Simulation.entity.StaticObject.Grass;
+
 import java.util.HashMap;
 import java.util.Random;
 
@@ -29,14 +32,30 @@ public class Map {
         }
     }
 
+    public static boolean mapEat(){
+        boolean a = false;
+        boolean b = false;
+        for(Entity entry : map.values()) {
+            if (entry instanceof Grass) {
+                a = true;
+            }
+            if (entry instanceof Herbivore) {
+                b = true;
+            }
+        }
+        if(a == false && b == false || b == false){
+            return true;
+        }
+        return false;
+    }
+
     public static Entity getEntity(Coordinates coordinates){
         return map.get(coordinates);
     }
 
     public static boolean hasFoodFor(Creature creature){
-        for(java.util.Map.Entry<Coordinates, Entity> entry : map.entrySet()){
-            Coordinates eating = entry.getKey();
-            if(creature.eat(eating)){
+        for(Entity entry : map.values()){
+            if(entry != creature && creature.eat(entry)){
                 return true;
             }
         }
@@ -49,8 +68,11 @@ public class Map {
 
         map.remove(oldCoordinates);
 
-        if( target != null && creature.eat(newCoordinates)){
-            map.remove(newCoordinates);
+        if( target != null && creature.eat(target)){ // если новая клетка занята и она еда то удаляем новую клетку
+            map.remove(newCoordinates);              // но если она занята и там хищник, то мы перезаписываем хищника?
+        }
+        if (target != null && !creature.eat(target)){ // если нова клетка занята и она не еда то сваливаем на след ход
+            return;
         }
         creature.coordinates = newCoordinates;
         map.put(newCoordinates, animal);

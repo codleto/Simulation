@@ -1,31 +1,25 @@
 package Simulation;
 
-import Simulation.entity.Entity;
-
 import java.util.Objects;
 
 public class Coordinates {
     public Integer vertical;
-    public final  Integer gorizantal;
+    public final  Integer horizontal;
 
-    public static void genPositionTwo(Entity entity){
-        entity.coordinates = new Coordinates(5,5);
-    }
-
-    public Coordinates(Integer vertical, Integer gorizantal) {
+    public Coordinates(Integer vertical, Integer horizontal) {
         this.vertical = vertical;
-        this.gorizantal = gorizantal;
+        this.horizontal = horizontal;
     }
 
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         Coordinates that = (Coordinates) o;
-        return vertical == that.vertical && Objects.equals(gorizantal, that.gorizantal);
+        return vertical.equals(that.vertical) && Objects.equals(horizontal, that.horizontal);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(vertical, gorizantal);
+        return Objects.hash(vertical, horizontal);
     }
 }
