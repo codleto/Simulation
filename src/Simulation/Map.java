@@ -32,10 +32,10 @@ public class Map {
         }
     }
 
-    public static boolean mapEat(){
+    public static boolean mapEat() {
         boolean a = false;
         boolean b = false;
-        for(Entity entry : map.values()) {
+        for (Entity entry : map.values()) {
             if (entry instanceof Grass) {
                 a = true;
             }
@@ -43,10 +43,7 @@ public class Map {
                 b = true;
             }
         }
-        if(a == false && b == false || b == false){
-            return true;
-        }
-        return false;
+        return !b;
     }
 
     public static Entity getEntity(Coordinates coordinates){
@@ -66,21 +63,23 @@ public class Map {
         Entity animal = map.get(oldCoordinates);
         Entity target = map.get(newCoordinates);
 
-        map.remove(oldCoordinates);
-
-        if( target != null && creature.eat(target)){ // если новая клетка занята и она еда то удаляем новую клетку
+        if( target != null && creature.eat(target)){ // если новая клетка занята и она еда то удаляем новую клетку и старую
             map.remove(newCoordinates);              // но если она занята и там хищник, то мы перезаписываем хищника?
         }
         if (target != null && !creature.eat(target)){ // если нова клетка занята и она не еда то сваливаем на след ход
             return;
         }
+        map.remove(oldCoordinates);
         creature.coordinates = newCoordinates;
-        map.put(newCoordinates, animal);
+        map.put(newCoordinates, animal); //
     }
 
 
     public static boolean granicPole(Coordinates coordinates) {
         return (coordinates.vertical > 4 || coordinates.vertical < 0 || coordinates.horizontal > 4 || coordinates.horizontal < 0);
+    }
+    public static Entity getMap(Coordinates coordinates){
+        return map.get(coordinates);
     }
 
     public static Entity getMap(int vertical, int horizontal) {
