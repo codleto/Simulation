@@ -1,5 +1,4 @@
 package Simulation.entity.Animal;
-import Simulation.Coordinates;
 import Simulation.Map;
 import Simulation.Search;
 import Simulation.entity.Entity;
@@ -8,11 +7,12 @@ import Simulation.entity.StaticObject.Grass;
 public class Herbivore extends Creature {
     private int stepIndex = 0;
 
-    public Herbivore(int id) {
-        this.id = id;
+    public Herbivore(int speed) {
         super.setSkin("\uD83D\uDC11");
+        this.speed = speed;
     }
     Search search = new Search();
+
 
     @Override
     public boolean eat(Entity entity){
@@ -25,25 +25,25 @@ public class Herbivore extends Creature {
                 break;
             }
 
-
+            if(this.coordinates == null){
+                break;
+            }
 
             if (stepIndex == 0) {
                 search.runSearch(this.coordinates, this);
             }
 
-            if (stepIndex >= search.pathToFood.size()) {
+            if (stepIndex >= search.pathToFood.size() && stepIndex > 0) {
                 search.clear();
                 stepIndex = 0;
                 continue;
             }
 
             if(search.pathToFood.isEmpty()){
-                Search.breakk.add(1);
                 break;
             }
 
             Map.step(this.coordinates, search.pathToFood.get(stepIndex), this);
-            this.coordinates = search.pathToFood.get(stepIndex);
             stepIndex++;
             break;
         }
