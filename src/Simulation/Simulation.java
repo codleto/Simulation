@@ -1,6 +1,7 @@
 package Simulation;
 
 public class Simulation {
+public static int moveCount = 0;
 
 }
 
