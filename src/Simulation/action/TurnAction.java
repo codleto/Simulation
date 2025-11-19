@@ -1,15 +1,18 @@
-package Simulation;
+package Simulation.action;
 
+import Simulation.Coordinates;
+import Simulation.Map;
 import Simulation.entity.Animal.Creature;
+
 import Simulation.entity.StaticObject.Grass;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 
-import static Simulation.Map.granicPole;
+import static Simulation.Map.*;
 
-public class Search {
+public class TurnAction {
     private Coordinates startCell;
     public ArrayList<Coordinates> visitedCells = new ArrayList<>();
     public HashMap<Coordinates, Coordinates> pathToStartCell = new HashMap<>();
@@ -90,5 +93,12 @@ public class Search {
             }
         }
         Collections.reverse(pathToFood);
+    }
+
+    public static void nextTurn(){
+        for(Creature herbivore : herbivoreArrayList){
+            herbivore.makeMove();
+        }
+        predatorArrayList.getFirst().makeMove();
     }
 }
