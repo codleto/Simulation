@@ -13,8 +13,8 @@ import static Simulation.Map.*;
 public class InitAction {
     static Scanner scanner = new Scanner(System.in);
     static int  sheepCount;
-    static int wolfAttack;
-    static int wolfSpeed;
+    private static int wolfAttack;
+    private static int wolfSpeed;
 
     // размер карты
     public static void mapSize() {
@@ -23,7 +23,7 @@ public class InitAction {
                     Карта 4x4 - жми 1
                     Карта 5х5 = жми 2
                     Карта 10х10 - жми 3""");
-            int index = scanner.nextInt(); // TODO: добавить проверку ввода пользователя
+            int index = readNumber();
             if (index > 0 && index < 4) {
                 if (index == 1) {
                     mapSize = 4;
@@ -60,7 +60,7 @@ public class InitAction {
             default:
         }
         while (true) {
-            int count = scanner.nextInt();
+            int count = readNumber();
             if (count > 0 && count <= maxSheep) {
                 sheepCount = count;
                 break;
@@ -118,7 +118,7 @@ public class InitAction {
     public static void wolfAttackPower() {
         while (true) {
             System.out.println("Введи силу атаки волка от 1 до 100");
-            int power = scanner.nextInt();
+            int power = readNumber();
             if (power > 0 && power <= 100) {
                 wolfAttack = power;
                 break;
@@ -131,13 +131,23 @@ public class InitAction {
     public static void wolfSpeed(){
         while (true) {
             System.out.println("Введи скорость волка от 1 до 5");
-            int speed = scanner.nextInt();
+            int speed = readNumber();
             if (speed > 0 && speed <= 5) {
                 wolfSpeed = speed;
                 break;
             } else {
                 System.out.println("Ты вышел из диапазона");
             }
+        }
+    }
+
+    public static int readNumber(){
+        while (true){
+            String s = scanner.nextLine().trim();
+            if(s.matches("\\d+")){
+                return Integer.parseInt(s);
+            }
+            System.out.println("Введи число без символов и букв");
         }
     }
 }
