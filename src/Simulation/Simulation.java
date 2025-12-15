@@ -1,7 +1,10 @@
 package Simulation;
 
 import Simulation.action.TurnAction;
+import Simulation.entity.StaticObject.Grass;
+
 import static Simulation.Map.mapEat;
+import static Simulation.Map.setEntity;
 import static Simulation.Renderer.renderer;
 import static Simulation.action.TurnAction.nextTurn;
 import java.util.Scanner;
@@ -10,7 +13,7 @@ import static Simulation.action.InitAction.*;
 public class Simulation {
     public static int moveCount = 0;
     public static void mainn() {
-        Scanner scanner = new Scanner(System.in);
+
         Console concolee = new Console();
         renderer();
         mapSize();
@@ -20,6 +23,7 @@ public class Simulation {
         initializeWorld();
         concolee.start();
 
+        OUT :
         while (true) {
             int x = readNumber();
             if (x == 1) {
@@ -31,19 +35,25 @@ public class Simulation {
                             concolee.continueSimulation();
                             break;
                         }
+
                     if (i == 2) {
                         concolee.exitSimulation();
-                        break;
+                        break OUT;
                     }
                 }
             }
 
-            if (x == 2) {
+            if(x == 2){
+                setEntity(new Grass());
+                continue;
+            }
+
+            if (x == 3) {
                 concolee.exitSimulation();
                 break;
             }
             else {
-                System.out.println("Введи 1 или 2. 1 = пауза" + " 2 = выход");
+                System.out.println("Введи 1,2 или 3. 1 = пауза |" + " 2 = Добавить еще еды |" + " 3 = выход");
             }
         }
 
@@ -57,7 +67,7 @@ class Console extends Thread {
 
     public void run() {
         renderer();
-        System.out.println("1 = пауза" + " 2 = выход");
+        System.out.println("1 = пауза |" + " 2 = Добавить еще еды |" + " 3 = выход");
         try {
             Thread.sleep(2500);
         } catch (InterruptedException e) {
@@ -71,7 +81,7 @@ class Console extends Thread {
                 }
                 nextTurn();
                 renderer();
-                System.out.println("1 = пауза" + " 2 = выход");
+                System.out.println("1 = пауза |" + " 2 = Добавить еще еды |" + " 3 = выход");
 
                 try {
                     Thread.sleep(2500);
