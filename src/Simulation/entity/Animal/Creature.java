@@ -2,15 +2,14 @@ package Simulation.entity.Animal;
 import Simulation.entity.Entity;
 
 public abstract class Creature extends Entity {
-    int id;
-    int hp = 100;
-    int speed;
-    int attack;
+    public int hp = 100;
+    public int speed = 1;
+    public int attack = 1;
 
     public abstract void makeMove();
     public abstract boolean eat(Entity entity);
 
-    public void satisfiedItsHunger(){ // нашли еду - восстанавливаем хп
+    public void satisfiedItsHunger(){
         this.hp = 100;
     }
 }
