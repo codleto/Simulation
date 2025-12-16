@@ -89,25 +89,25 @@ public class InitAction {
             maxTreeCount = 11;
         }
         predatorArrayList.add(new Predator(wolfSpeed, wolfAttack));
-        setEntity(predatorArrayList.getFirst());
+        spawnEntity(predatorArrayList.getFirst());
 
 
         for (int i = 0; i < sheepCount; i++) {
             herbivoreArrayList.add(new Herbivore());
-            setEntity(herbivoreArrayList.get(i));
+            spawnEntity(herbivoreArrayList.get(i));
 
         }
 
         for (int i = 0; i < maxRockCount; i++) {
-            setEntity(new Rock());
+            spawnEntity(new Rock());
         }
 
         for (int i = 0; i < maxGrassCount; i++) {
-            setEntity(new Grass());
+            spawnEntity(new Grass());
         }
 
         for (int i = 0; i < maxTreeCount; i++) {
-            setEntity(new Tree());
+            spawnEntity(new Tree());
         }
     }
 
