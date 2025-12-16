@@ -2,17 +2,16 @@ package Simulation.entity.Animal;
 
 
 import Simulation.Map;
-import Simulation.Search;
+import Simulation.action.TurnAction;
 import Simulation.entity.Entity;
 
 public class Predator extends Creature {
+    TurnAction turnAction = new TurnAction();
     public Predator(int speed, int attack) {
         super.setSkin("\uD83D\uDC3A");
         this.speed = speed;
         this.attack = attack;
     }
-
-    Search search = new Search();
 
     @Override
     public boolean eat(Entity entity){
@@ -20,24 +19,28 @@ public class Predator extends Creature {
     }
 
     public void makeMove() {
+        int i = 1;
+        while (speed >= i) {
 
-        if (!Map.hasFoodFor(this)) { // еды больше нет
-            search.clear();
-            return;
+            if (Map.noFoodFor(this)) { // еды больше нет
+                turnAction.clear();
+                return;
+            }
+
+            turnAction.clear();
+            turnAction.searchForFood(this.coordinates, this); // если только начали искать еду первый раз
+
+            if (turnAction.pathToFood.isEmpty() && turnAction.foodIndicators.isEmpty()) { // если все пусто
+                return;
+            }
+
+            if (turnAction.pathToFood.isEmpty()) {// если путь пустой
+                return;
+            }
+
+            Map.moveCreature(this.coordinates, turnAction.pathToFood.getFirst(), this);
+            TurnAction.movesThisTurn.add(1);
+            i++;
         }
-
-        search.clear();
-        search.runSearch(this.coordinates, this); // если только начали искать еду первый раз
-
-        if(search.pathToFood.isEmpty() && search.grass.isEmpty()){ // если все пусто
-            Search.breakk.add(1);
-            return;
-        }
-
-        if(search.pathToFood.isEmpty()){ // если путь пустой
-            return;
-        }
-
-        Map.step(this.coordinates, search.pathToFood.getFirst(), this);
     }
 }
