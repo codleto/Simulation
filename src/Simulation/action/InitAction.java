@@ -16,22 +16,21 @@ public class InitAction {
     private static int wolfAttack;
     private static int wolfSpeed;
 
-    // размер карты
-    public static void mapSize() {
+    public static void chooseMapSize() {
         while (true) {
             System.out.println("""
                     Карта 4x4 - жми 1
                     Карта 5х5 = жми 2
                     Карта 10х10 - жми 3""");
-            int index = readNumber();
-            if (index > 0 && index < 4) {
-                if (index == 1) {
+            int userChoice = readNumber();
+            if (userChoice > 0 && userChoice < 4) {
+                if (userChoice == 1) {
                     mapSize = 4;
                 }
-                if (index == 2) {
+                if (userChoice == 2) {
                     mapSize = 5;
                 }
-                if (index == 3) {
+                if (userChoice == 3) {
                     mapSize = 10;
                 }
                 break;
@@ -41,55 +40,53 @@ public class InitAction {
         }
     }
 
-    // выбрать сколько будет овечек
-    public static void setSheepCount() {
-        int maxSheep = 0;
+    public static void configureSheepCount() {
+        int maxSheepCount = 0;
         switch (mapSize) {
             case 4:
                 System.out.println("Выбери от 1 до 4 овечки");
-                maxSheep = 4;
+                maxSheepCount = 4;
                 break;
             case 5:
                 System.out.println("Выбери от 1 до 7 овечек");
-                maxSheep = 7;
+                maxSheepCount = 7;
                 break;
             case 10:
                 System.out.println("Выбери от 1 до 10 овечек");
-                maxSheep = 10;
+                maxSheepCount = 10;
                 break;
             default:
         }
         while (true) {
-            int count = readNumber();
-            if (count > 0 && count <= maxSheep) {
-                sheepCount = count;
+            int userSheepCount = readNumber();
+            if (userSheepCount > 0 && userSheepCount <= maxSheepCount) {
+                sheepCount = userSheepCount;
                 break;
             } else {
-                System.out.println("Добавь от 1 до" + maxSheep);
+                System.out.println("Добавь от 1 до" + maxSheepCount);
             }
         }
     }
 
-    // расставить объекты и существ перед стартом
     public static void initializeWorld() {
-        int maxRock = 0;
-        int maxGrass = 0;
-        int maxTree = 0;
+        int maxRockCount = 0;
+        int maxGrassCount = 0;
+        int maxTreeCount = 0;
 
         if (mapSize == 4) {
-            maxRock = 4;
-            maxGrass = 6;
-            maxTree = 4;
+            maxRockCount = 4;
+            maxGrassCount = 6;
+            maxTreeCount = 4;
         }
         if (mapSize == 5) {
-            maxRock = 6;
-            maxGrass = 8;
-            maxTree = 6;
+            maxRockCount = 6;
+            maxGrassCount = 8;
+            maxTreeCount = 6;
         }
         if (mapSize == 10) {
-            maxRock = 11;
-            maxGrass = 15;
-            maxTree = 11;
+            maxRockCount = 11;
+            maxGrassCount = 15;
+            maxTreeCount = 11;
         }
         predatorArrayList.add(new Predator(wolfSpeed, wolfAttack));
         setEntity(predatorArrayList.getFirst());
@@ -101,39 +98,38 @@ public class InitAction {
 
         }
 
-        for (int i = 0; i < maxRock; i++) {
+        for (int i = 0; i < maxRockCount; i++) {
             setEntity(new Rock());
         }
 
-        for (int i = 0; i < maxGrass; i++) {
+        for (int i = 0; i < maxGrassCount; i++) {
             setEntity(new Grass());
         }
 
-        for (int i = 0; i < maxTree; i++) {
+        for (int i = 0; i < maxTreeCount; i++) {
             setEntity(new Tree());
         }
     }
 
-    // сила атаки волка
-    public static void wolfAttackPower() {
+    public static void setWolfAttackPower() {
         while (true) {
             System.out.println("Введи силу атаки волка от 1 до 100");
-            int power = readNumber();
-            if (power > 0 && power <= 100) {
-                wolfAttack = power;
+            int attackPower = readNumber();
+            if (attackPower > 0 && attackPower <= 100) {
+                wolfAttack = attackPower;
                 break;
             } else {
                 System.out.println("Ты вышел из диапазона");
             }
         }
     }
-        // скорость волка и овечки
-    public static void wolfSpeed(){
+
+    public static void setWolfSpeed(){
         while (true) {
-            System.out.println("Введи скорость волка от 1 до 5");
-            int speed = readNumber();
-            if (speed > 0 && speed <= 5) {
-                wolfSpeed = speed;
+            System.out.println("Введи скорость волка от 1 до 5 шагов");
+            int wolfSpeed = readNumber();
+            if (wolfSpeed > 0 && wolfSpeed <= 5) {
+                InitAction.wolfSpeed = wolfSpeed;
                 break;
             } else {
                 System.out.println("Ты вышел из диапазона");
@@ -143,9 +139,9 @@ public class InitAction {
 
     public static int readNumber(){
         while (true){
-            String s = scanner.nextLine().trim();
-            if(s.matches("\\d+")){
-                return Integer.parseInt(s);
+            String input = scanner.nextLine().trim();
+            if(input.matches("\\d+")){
+                return Integer.parseInt(input);
             }
             System.out.println("Введи число без символов и букв");
         }
