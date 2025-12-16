@@ -6,6 +6,7 @@ import Simulation.entity.Animal.Herbivore;
 import Simulation.entity.Entity;
 import Simulation.entity.StaticObject.Grass;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
 
@@ -13,18 +14,30 @@ public class Map {
 
     static Random random = new Random();
 
-    public static HashMap<Coordinates, Entity> map = new HashMap<>();
+    private static HashMap<Coordinates, Entity> map = new HashMap<>();
+    public static int mapSize = 5;
+    public static ArrayList<Creature> predatorArrayList = new ArrayList<>();
+    public static ArrayList<Creature> herbivoreArrayList = new ArrayList<>();
 
     public static void setEntity(Entity entity) {
         Coordinates c = genPosition();
+
         entity.coordinates = c;
-        map.put(c, entity);
+        addEntity(c, entity);
+    }
+
+    public static void addEntity(Coordinates coordinates, Entity entity ){
+        map.put(coordinates, entity);
+    }
+
+    public static void removeEntity(Coordinates coordinates){
+        map.remove(coordinates);
     }
 
     public static Coordinates genPosition() {
         while (true) {
-            int vertical = random.nextInt(5);
-            int horizontal = random.nextInt(5);
+            int vertical = random.nextInt(mapSize + 1);
+            int horizontal = random.nextInt(mapSize + 1);
 
             if (map.get(new Coordinates(vertical, horizontal)) == null) {
                 return new Coordinates(vertical, horizontal);
@@ -60,23 +73,34 @@ public class Map {
     }
 
     public static void step(Coordinates oldCoordinates , Coordinates newCoordinates, Creature creature){
-        Entity animal = map.get(oldCoordinates);
+        Creature animal = (Creature) map.get(oldCoordinates);
         Entity target = map.get(newCoordinates);
 
-        if( target != null && creature.eat(target)){ // если новая клетка занята и она еда то удаляем новую клетку и старую
-            map.remove(newCoordinates);              // но если она занята и там хищник, то мы перезаписываем хищника?
-        }
-        if (target != null && !creature.eat(target)){ // если нова клетка занята и она не еда то сваливаем на след ход
-            return;
-        }
-        map.remove(oldCoordinates);
-        creature.coordinates = newCoordinates;
-        map.put(newCoordinates, animal); //
+            if (target != null && creature.eat(target)) {// если новая клетка занята и она еда то удаляем новую клетку и старую
+                if (target instanceof Creature){
+                    Creature t = (Creature)target;
+                    t.hp -= animal.attack;
+                    if(t.hp > 0){
+                        return;
+                    }
+                }
+                    removeEntity(newCoordinates);
+                    target.coordinates = null;
+                    creature.satisfiedItsHunger();
+            }
+            if (target != null && !creature.eat(target)) { // если нова клетка занята и она не еда то сваливаем на след ход
+                return;
+            }
+
+            removeEntity(oldCoordinates);
+            creature.coordinates = newCoordinates;
+            addEntity(newCoordinates, animal);
+            Simulation.moveCount++;
     }
 
 
     public static boolean granicPole(Coordinates coordinates) {
-        return (coordinates.vertical > 4 || coordinates.vertical < 0 || coordinates.horizontal > 4 || coordinates.horizontal < 0);
+        return (coordinates.vertical > mapSize || coordinates.vertical < 0 || coordinates.horizontal > mapSize || coordinates.horizontal < 0);
     }
     public static Entity getMap(Coordinates coordinates){
         return map.get(coordinates);
