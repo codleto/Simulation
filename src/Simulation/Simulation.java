@@ -3,11 +3,10 @@ package Simulation;
 import Simulation.action.TurnAction;
 import Simulation.entity.StaticObject.Grass;
 
-import static Simulation.Map.mapEat;
-import static Simulation.Map.setEntity;
+import static Simulation.Map.isFoodAvailableFor;
+import static Simulation.Map.spawnEntity;
 import static Simulation.Renderer.renderer;
 import static Simulation.action.TurnAction.nextTurn;
-import java.util.Scanner;
 import static Simulation.action.InitAction.*;
 
 public class Simulation {
@@ -16,10 +15,10 @@ public class Simulation {
 
         Console concolee = new Console();
         renderer();
-        mapSize();
-        setSheepCount();
-        wolfAttackPower();
-        wolfSpeed();
+        chooseMapSize();
+        configureSheepCount();
+        setWolfAttackPower();
+        setWolfSpeed();
         initializeWorld();
         concolee.start();
 
@@ -44,7 +43,7 @@ public class Simulation {
             }
 
             if(x == 2){
-                setEntity(new Grass());
+                spawnEntity(new Grass());
                 continue;
             }
 
@@ -76,7 +75,7 @@ class Console extends Thread {
 
         while (runneble) {
             if(!pause) {
-                if (mapEat()) {
+                if (isFoodAvailableFor()) {
                     break;
                 }
                 nextTurn();
@@ -88,8 +87,8 @@ class Console extends Thread {
                 } catch (InterruptedException e) {
                     throw new RuntimeException(e);
                 }
-                if (!TurnAction.breakk.isEmpty()) {
-                    TurnAction.breakk.clear();
+                if (!TurnAction.movesThisTurn.isEmpty()) {
+                    TurnAction.movesThisTurn.clear();
                     continue;
                 }
                 break;
