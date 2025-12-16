@@ -4,37 +4,32 @@ import Simulation.entity.Animal.Creature;
 
 import Simulation.entity.Animal.Herbivore;
 import Simulation.entity.Entity;
-import Simulation.entity.StaticObject.Grass;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
 
 public class Map {
-
     static Random random = new Random();
 
-    private static HashMap<Coordinates, Entity> map = new HashMap<>();
+    private static final HashMap<Coordinates, Entity> map = new HashMap<>();
     public static int mapSize = 5;
     public static ArrayList<Creature> predatorArrayList = new ArrayList<>();
     public static ArrayList<Creature> herbivoreArrayList = new ArrayList<>();
 
-    public static void setEntity(Entity entity) {
-        Coordinates c = genPosition();
+    public static void spawnEntity(Entity entity) {
+        Coordinates position = generateRandomPosition();
 
-        entity.coordinates = c;
-        addEntity(c, entity);
+        entity.coordinates = position;
+        addEntity(position, entity);
     }
-
     public static void addEntity(Coordinates coordinates, Entity entity ){
         map.put(coordinates, entity);
     }
-
     public static void removeEntity(Coordinates coordinates){
         map.remove(coordinates);
     }
-
-    public static Coordinates genPosition() {
+    public static Coordinates generateRandomPosition() {
         while (true) {
             int vertical = random.nextInt(mapSize + 1);
             int horizontal = random.nextInt(mapSize + 1);
@@ -44,72 +39,59 @@ public class Map {
             }
         }
     }
-
-    public static boolean mapEat() {
-        boolean a = false;
-        boolean b = false;
+    public static boolean isFoodAvailableFor() {
         for (Entity entry : map.values()) {
-            if (entry instanceof Grass) {
-                a = true;
-            }
             if (entry instanceof Herbivore) {
-                b = true;
+                return false;
             }
         }
-        return !b;
+        return true;
     }
-
     public static Entity getEntity(Coordinates coordinates){
         return map.get(coordinates);
     }
-
-    public static boolean hasFoodFor(Creature creature){
+    public static boolean noFoodFor(Creature creature){
         for(Entity entry : map.values()){
             if(entry != creature && creature.eat(entry)){
-                return true;
+                return false;
             }
         }
-        return false;
+        return true;
     }
+    public static void moveCreature(Coordinates from , Coordinates to, Creature mover){
+        Creature movingCreature = (Creature) map.get(from);
+        Entity target = map.get(to);
 
-    public static void step(Coordinates oldCoordinates , Coordinates newCoordinates, Creature creature){
-        Creature animal = (Creature) map.get(oldCoordinates);
-        Entity target = map.get(newCoordinates);
-
-            if (target != null && creature.eat(target)) {// если новая клетка занята и она еда то удаляем новую клетку и старую
+            if (target != null && mover.eat(target)) {
                 if (target instanceof Creature){
-                    Creature t = (Creature)target;
-                    t.hp -= animal.attack;
-                    if(t.hp > 0){
+                    Creature targetCreature = (Creature)target;
+                    targetCreature.hp -= movingCreature.attack;
+                    if(targetCreature.hp > 0){
                         return;
                     }
                 }
-                    removeEntity(newCoordinates);
+                    removeEntity(to);
                     target.coordinates = null;
-                    creature.satisfiedItsHunger();
+                    mover.satisfiedItsHunger();
             }
-            if (target != null && !creature.eat(target)) { // если нова клетка занята и она не еда то сваливаем на след ход
+            if (target != null && !mover.eat(target)) {
                 return;
             }
 
-            removeEntity(oldCoordinates);
-            creature.coordinates = newCoordinates;
-            addEntity(newCoordinates, animal);
+            removeEntity(from);
+            mover.coordinates = to;
+            addEntity(to, movingCreature);
             Simulation.moveCount++;
     }
-
-
-    public static boolean granicPole(Coordinates coordinates) {
+    public static boolean isInsideMap(Coordinates coordinates) {
         return (coordinates.vertical > mapSize || coordinates.vertical < 0 || coordinates.horizontal > mapSize || coordinates.horizontal < 0);
     }
     public static Entity getMap(Coordinates coordinates){
         return map.get(coordinates);
     }
-
     public static Entity getMap(int vertical, int horizontal) {
         return map.get(new Coordinates(vertical, horizontal));
     }
-
     public static String getSkins(int vertical, int horizontal) {
         Entity skin = map.get(new Coordinates(vertical, horizontal));
         return skin.getSkin();
