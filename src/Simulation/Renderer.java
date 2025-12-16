@@ -1,13 +1,13 @@
 package Simulation;
 
-import java.util.HashMap;
+import static Simulation.Map.mapSize;
 
 public class Renderer {
 
     public static void renderer() {
-        for (int gorizontal = 4; gorizontal >= 0; gorizontal--) {
+        for (int gorizontal = mapSize; gorizontal >= 0; gorizontal--) {
             System.out.println();
-            for (int vertical = 4; vertical >= 0; vertical--){
+            for (int vertical = mapSize; vertical >= 0; vertical--){
                 if(Map.getMap(vertical, gorizontal) == null){
                     System.out.print("\u001b[42m   ");
                 } else {
