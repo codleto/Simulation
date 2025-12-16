@@ -15,31 +15,31 @@ import static Simulation.Map.*;
 public class TurnAction {
     private Coordinates startCell;
     public ArrayList<Coordinates> visitedCells = new ArrayList<>();
-    public HashMap<Coordinates, Coordinates> pathToStartCell = new HashMap<>();
+    public HashMap<Coordinates, Coordinates> cameFrom = new HashMap<>();
     public ArrayList<Coordinates> pathToFood = new ArrayList<>();
-    public static ArrayList<Integer> breakk = new ArrayList<>();
-    public ArrayList<Integer> grass = new ArrayList<>();
+    public static ArrayList<Integer> movesThisTurn = new ArrayList<>();
+    public ArrayList<Integer> foodIndicators = new ArrayList<>();
 
     public void clear() {
         visitedCells.clear();
-        pathToStartCell.clear();
+        cameFrom.clear();
         pathToFood.clear();
         startCell = null;
-        grass.clear();
+        foodIndicators.clear();
     }
 
     public boolean isCellNotVisited(Coordinates coordinates) {
         return !visitedCells.contains(coordinates);
     }
 
-    public void runSearch(Coordinates coordinates, Creature creature) {
+    public void searchForFood(Coordinates coordinates, Creature creature) {
         startCell = coordinates;
         visitedCells.add(coordinates);
 
         int index = 0;
-        boolean go = true;
-        while (go) {
-            if (index >= visitedCells.size()) { // если индекс равен или больше размера посещенных клеток
+        boolean foundFood = false;
+        while (!foundFood) {
+            if (index >= visitedCells.size()) {
                 break;
             }
 
@@ -52,20 +52,20 @@ public class TurnAction {
             };
 
             for (Coordinates child : childCell) {
-                if (!granicPole(child)) {
-                    if (Map.getMap(child) == null) { // если клетка пустая
-                        if (isCellNotVisited(child)) { // если клетку не посещали
-                            visitedCells.add(child); // начинаем запись в очередь
-                            pathToStartCell.put(child, parentCell);
+                if (!isInsideMap(child)) {
+                    if (Map.getMap(child) == null) {
+                        if (isCellNotVisited(child)) {
+                            visitedCells.add(child);
+                            cameFrom.put(child, parentCell);
                         }
-                    } else if (creature.eat(Map.getEntity(child))) { // если клетка еда
-                        pathToStartCell.put(child, parentCell);
+                    } else if (creature.eat(Map.getEntity(child))) {
+                        cameFrom.put(child, parentCell);
                         findPathToFood(child);
-                        go = false;
+                        foundFood = true;
                         break;
 
                     } else if(Map.getEntity(child) instanceof Grass ) {
-                        grass.add(1);
+                        foodIndicators.add(1);
                     }
                 }
             }
@@ -80,7 +80,7 @@ public class TurnAction {
         while(true) {
             if (childCell != null && !startCell.equals(childCell)) {
                 pathToFood.add(childCell);
-                childCell = pathToStartCell.get(childCell);
+                childCell = cameFrom.get(childCell);
             }
 
             if(startCell.equals(childCell)){
