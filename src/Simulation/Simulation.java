@@ -11,44 +11,44 @@ import static Simulation.action.InitAction.*;
 
 public class Simulation {
     public static int moveCount = 0;
-    public static void mainn() {
+    public static void startSimulation() {
+        SimulationRunner runner = new SimulationRunner();
 
-        Console concolee = new Console();
         renderer();
         chooseMapSize();
         configureSheepCount();
         setWolfAttackPower();
         setWolfSpeed();
         initializeWorld();
-        concolee.start();
+        runner.start();
 
         OUT :
         while (true) {
-            int x = readNumber();
-            if (x == 1) {
-                concolee.pauseSimulation();
+            int menuChoice = readNumber();
+            if (menuChoice == 1) {
+                runner.pause();
                 while (true) {
                     System.out.println("Продолжить нажми - 1 Для выхода нажми - 2");
-                    int i = readNumber();
-                        if(i == 1){
-                            concolee.continueSimulation();
+                    int pauseMenuChoice = readNumber();
+                        if(pauseMenuChoice == 1){
+                            runner.resume();
                             break;
                         }
 
-                    if (i == 2) {
-                        concolee.exitSimulation();
+                    if (pauseMenuChoice == 2) {
+                        runner.exitSimulation();
                         break OUT;
                     }
                 }
             }
 
-            if(x == 2){
+            if(menuChoice == 2){
                 spawnEntity(new Grass());
                 continue;
             }
 
-            if (x == 3) {
-                concolee.exitSimulation();
+            if (menuChoice == 3) {
+                runner.exitSimulation();
                 break;
             }
             else {
@@ -60,27 +60,29 @@ public class Simulation {
 
 }
 
-class Console extends Thread {
-    public volatile boolean runneble = true;
-    public volatile boolean pause = false;
+class SimulationRunner extends Thread {
+    public volatile boolean running = true;
+    public volatile boolean paused = false;
 
     public void run() {
         renderer();
         System.out.println("1 = пауза |" + " 2 = Добавить еще еды |" + " 3 = выход");
+        System.out.println("Количество шагов животных: " + Simulation.moveCount);
         try {
             Thread.sleep(2500);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
 
-        while (runneble) {
-            if(!pause) {
+        while (running) {
+            if(!paused) {
                 if (isFoodAvailableFor()) {
                     break;
                 }
                 nextTurn();
                 renderer();
                 System.out.println("1 = пауза |" + " 2 = Добавить еще еды |" + " 3 = выход");
+                System.out.println("Количество шагов животных: " + Simulation.moveCount);
 
                 try {
                     Thread.sleep(2500);
@@ -98,15 +100,15 @@ class Console extends Thread {
     }
 
     public void exitSimulation(){
-        runneble = false;
+        running = false;
     }
 
-    public void pauseSimulation(){
-        pause = true;
+    public void pause(){
+        paused = true;
     }
 
-    public void continueSimulation(){
-        pause = false;
+    public void resume(){
+        paused = false;
     }
 }
 
