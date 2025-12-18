@@ -1,9 +1,9 @@
-package Simulation.entity.Animal;
+package Simulation.Entity.Animal;
 
 
 import Simulation.Map;
-import Simulation.action.TurnAction;
-import Simulation.entity.Entity;
+import Simulation.Action.TurnAction;
+import Simulation.Entity.Entity;
 
 public class Predator extends Creature {
     TurnAction turnAction = new TurnAction();

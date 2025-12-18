@@ -1,6 +1,6 @@
-package Simulation.entity.StaticObject;
+package Simulation.Entity.StaticObject;
 
-import Simulation.entity.Entity;
+import Simulation.Entity.Entity;
 
 public class Eat extends Entity {
     public Eat() {

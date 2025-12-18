@@ -1,10 +1,10 @@
-package Simulation.action;
+package Simulation.Action;
 
 import Simulation.Coordinates;
 import Simulation.Map;
-import Simulation.entity.Animal.Creature;
+import Simulation.Entity.Animal.Creature;
 
-import Simulation.entity.StaticObject.Eat;
+import Simulation.Entity.StaticObject.Eat;
 
 import java.util.ArrayList;
 import java.util.Collections;

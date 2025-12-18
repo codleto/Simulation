@@ -1,13 +1,13 @@
 package Simulation;
 
-import Simulation.action.TurnAction;
-import Simulation.entity.StaticObject.Eat;
+import Simulation.Action.TurnAction;
+import Simulation.Entity.StaticObject.Eat;
 
 import static Simulation.Map.isFoodAvailableFor;
 import static Simulation.Map.spawnEntity;
 import static Simulation.Renderer.renderer;
-import static Simulation.action.TurnAction.nextTurn;
-import static Simulation.action.InitAction.*;
+import static Simulation.Action.TurnAction.nextTurn;
+import static Simulation.Action.InitAction.*;
 
 public class Simulation {
     public static int moveCount = 0;

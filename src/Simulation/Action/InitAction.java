@@ -1,10 +1,10 @@
-package Simulation.action;
+package Simulation.Action;
 
-import Simulation.entity.Animal.Herbivore;
-import Simulation.entity.Animal.Predator;
-import Simulation.entity.StaticObject.Eat;
-import Simulation.entity.StaticObject.Rock;
-import Simulation.entity.StaticObject.Tree;
+import Simulation.Entity.Animal.Herbivore;
+import Simulation.Entity.Animal.Predator;
+import Simulation.Entity.StaticObject.Eat;
+import Simulation.Entity.StaticObject.Rock;
+import Simulation.Entity.StaticObject.Tree;
 
 import java.util.Scanner;
 

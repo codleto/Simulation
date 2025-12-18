@@ -1,5 +1,5 @@
-package Simulation.entity.Animal;
-import Simulation.entity.Entity;
+package Simulation.Entity.Animal;
+import Simulation.Entity.Entity;
 
 public abstract class Creature extends Entity {
     public int hp = 100;

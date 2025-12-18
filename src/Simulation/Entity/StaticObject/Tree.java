@@ -1,6 +1,6 @@
-package Simulation.entity.StaticObject;
+package Simulation.Entity.StaticObject;
 
-import Simulation.entity.Entity;
+import Simulation.Entity.Entity;
 
 public class Tree extends Entity {
     public Tree() {

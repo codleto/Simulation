@@ -1,4 +1,4 @@
-package Simulation.entity;
+package Simulation.Entity;
 
 import Simulation.Coordinates;
 

@@ -1,9 +1,9 @@
 package Simulation;
 
-import Simulation.entity.Animal.Creature;
+import Simulation.Entity.Animal.Creature;
 
-import Simulation.entity.Animal.Herbivore;
-import Simulation.entity.Entity;
+import Simulation.Entity.Animal.Herbivore;
+import Simulation.Entity.Entity;
 
 import java.util.ArrayList;
 import java.util.HashMap;

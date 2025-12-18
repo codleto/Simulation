@@ -1,8 +1,8 @@
-package Simulation.entity.Animal;
+package Simulation.Entity.Animal;
 import Simulation.Map;
-import Simulation.action.TurnAction;
-import Simulation.entity.Entity;
-import Simulation.entity.StaticObject.Eat;
+import Simulation.Action.TurnAction;
+import Simulation.Entity.Entity;
+import Simulation.Entity.StaticObject.Eat;
 
 public class Herbivore extends Creature {
     TurnAction turnAction = new TurnAction();
