@@ -44,7 +44,7 @@ public class InitAction {
         int maxSheepCount = 0;
         switch (mapSize) {
             case 4:
-                System.out.println("Выбери от 1 до 4 овечки");
+                System.out.println("Выбери от 1 до 4 овечек");
                 maxSheepCount = 4;
                 break;
             case 5:
@@ -119,7 +119,7 @@ public class InitAction {
                 wolfAttack = attackPower;
                 break;
             } else {
-                System.out.println("Ты вышел из диапазона");
+                System.out.println("Ты вышел из диапазона. Пожалуйста введи атаку от 1 до 100");
             }
         }
     }
@@ -132,7 +132,7 @@ public class InitAction {
                 InitAction.wolfSpeed = wolfSpeed;
                 break;
             } else {
-                System.out.println("Ты вышел из диапазона");
+                System.out.println("Ты вышел из диапазона. Пожалуйста введи скорость от 1 до 5 шагов");
             }
         }
     }
