@@ -2,7 +2,7 @@ package Simulation.entity.Animal;
 import Simulation.Map;
 import Simulation.action.TurnAction;
 import Simulation.entity.Entity;
-import Simulation.entity.StaticObject.Grass;
+import Simulation.entity.StaticObject.Eat;
 
 public class Herbivore extends Creature {
     TurnAction turnAction = new TurnAction();
@@ -14,7 +14,7 @@ public class Herbivore extends Creature {
 
     @Override
     public boolean eat(Entity entity){
-        return entity instanceof Grass;
+        return entity instanceof Eat;
     }
 
     public void makeMove() {

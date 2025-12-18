@@ -1,7 +1,7 @@
 package Simulation;
 
 import Simulation.action.TurnAction;
-import Simulation.entity.StaticObject.Grass;
+import Simulation.entity.StaticObject.Eat;
 
 import static Simulation.Map.isFoodAvailableFor;
 import static Simulation.Map.spawnEntity;
@@ -43,7 +43,7 @@ public class Simulation {
             }
 
             if(menuChoice == 2){
-                spawnEntity(new Grass());
+                spawnEntity(new Eat());
                 continue;
             }
 
@@ -52,7 +52,9 @@ public class Simulation {
                 break;
             }
             else {
-                System.out.println("Введи 1,2 или 3. 1 = пауза |" + " 2 = Добавить еще еды |" + " 3 = выход");
+                System.out.println("""
+                        Введи 1,2 или 3.
+                        1 = пауза | 2 = Добавить еще еды | 3 = выход""");
             }
         }
 
@@ -69,7 +71,7 @@ class SimulationRunner extends Thread {
         System.out.println("1 = пауза |" + " 2 = Добавить еще еды |" + " 3 = выход");
         System.out.println("Количество шагов животных: " + Simulation.moveCount);
         try {
-            Thread.sleep(2500);
+            Thread.sleep(2000);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }

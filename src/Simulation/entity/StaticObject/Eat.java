@@ -2,8 +2,8 @@ package Simulation.entity.StaticObject;
 
 import Simulation.entity.Entity;
 
-public class Grass extends Entity {
-    public Grass() {
+public class Eat extends Entity {
+    public Eat() {
         super.setSkin("\uD83C\uDF2F");
     }
 

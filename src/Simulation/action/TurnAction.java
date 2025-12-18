@@ -4,7 +4,7 @@ import Simulation.Coordinates;
 import Simulation.Map;
 import Simulation.entity.Animal.Creature;
 
-import Simulation.entity.StaticObject.Grass;
+import Simulation.entity.StaticObject.Eat;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -64,7 +64,7 @@ public class TurnAction {
                         foundFood = true;
                         break;
 
-                    } else if(Map.getEntity(child) instanceof Grass ) {
+                    } else if(Map.getEntity(child) instanceof Eat) {
                         foodIndicators.add(1);
                     }
                 }
