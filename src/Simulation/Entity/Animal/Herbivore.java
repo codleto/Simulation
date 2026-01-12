@@ -1,6 +1,6 @@
 package Simulation.Entity.Animal;
 import Simulation.Map;
-import Simulation.Action.TurnAction;
+import Simulation.action.TurnAction;
 import Simulation.Entity.Entity;
 import Simulation.Entity.StaticObject.Eat;
 
@@ -15,6 +15,42 @@ public class Herbivore extends Creature {
     @Override
     public boolean eat(Entity entity){
         return entity instanceof Eat;
+    }
+
+    @Override
+    public int getHp() {
+        return this.hp;
+    }
+
+    @Override
+    public void setHp(int hp){
+        if(hp >= 0 && hp <= 100){
+            this.hp = hp;
+        }
+    }
+
+    @Override
+    public int getSpeed() {
+        return this.speed;
+    }
+
+    @Override
+    public void setSpeed(int speed) {
+        if(speed >= 0){
+            this.speed = speed;
+        }
+    }
+
+    @Override
+    public int getAttack() {
+        return this.attack;
+    }
+
+    @Override
+    public void setAttack(int attack) {
+        if (attack >= 0) {
+            this.attack = attack;
+        }
     }
 
     public void makeMove() {
