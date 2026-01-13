@@ -9,7 +9,6 @@ public abstract class Creature extends Entity {
     public abstract int getHp();
     public abstract void setHp(int hp);
 
-    public abstract int getSpeed();
     public abstract void setSpeed(int speed);
 
     public abstract int getAttack();

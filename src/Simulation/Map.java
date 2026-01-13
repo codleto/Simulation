@@ -65,8 +65,8 @@ public class Map {
             if (target != null && mover.eat(target)) {
                 if (target instanceof Creature){
                     Creature targetCreature = (Creature)target;
-                    targetCreature.hp -= movingCreature.attack;
-                    if(targetCreature.hp > 0){
+                    targetCreature.setHp(targetCreature.getHp() - movingCreature.getAttack());
+                    if(targetCreature.getHp() > 0){
                         return;
                     }
                 }
@@ -95,10 +95,6 @@ public class Map {
     public static String getSkins(int vertical, int horizontal) {
         Entity skin = map.get(new Coordinates(vertical, horizontal));
         return skin.getSkin();
-    }
-
-    public void clear(){
-        map.clear();
     }
 }
 

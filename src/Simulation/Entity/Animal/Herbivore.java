@@ -30,11 +30,6 @@ public class Herbivore extends Creature {
     }
 
     @Override
-    public int getSpeed() {
-        return this.speed;
-    }
-
-    @Override
     public void setSpeed(int speed) {
         if(speed >= 0){
             this.speed = speed;
