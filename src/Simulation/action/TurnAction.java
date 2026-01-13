@@ -1,4 +1,4 @@
-package Simulation.Action;
+package Simulation.action;
 
 import Simulation.Coordinates;
 import Simulation.Map;

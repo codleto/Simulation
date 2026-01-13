@@ -1,4 +1,4 @@
-package Simulation.Action;
+package Simulation.action;
 
 import Simulation.Entity.Animal.Herbivore;
 import Simulation.Entity.Animal.Predator;
@@ -12,7 +12,7 @@ import static Simulation.Map.*;
 
 public class InitAction {
     static Scanner scanner = new Scanner(System.in);
-    static int  sheepCount;
+    static int sheepCount;
     private static int wolfAttack;
     private static int wolfSpeed;
 
