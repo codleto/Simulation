@@ -1,16 +1,47 @@
 package Simulation.Entity.Animal;
 
-
 import Simulation.Map;
-import Simulation.Action.TurnAction;
+import Simulation.action.TurnAction;
 import Simulation.Entity.Entity;
 
 public class Predator extends Creature {
     TurnAction turnAction = new TurnAction();
+
     public Predator(int speed, int attack) {
         super.setSkin("\uD83D\uDC3A");
-        this.speed = speed;
-        this.attack = attack;
+        setAttack(attack);
+        setSpeed(speed);
+    }
+
+    @Override
+    public int getHp() {
+        return this.hp;
+    }
+
+    @Override
+    public void setHp(int hp){
+        if(hp >= 0 && hp <= 100){
+            this.hp = hp;
+        }
+    }
+
+    @Override
+    public void setSpeed(int speed) {
+        if(speed >= 0){
+            this.speed = speed;
+        }
+    }
+
+    @Override
+    public int getAttack() {
+        return this.attack;
+    }
+
+    @Override
+    public void setAttack(int attack) {
+        if (attack >= 0) {
+            this.attack = attack;
+        }
     }
 
     @Override
