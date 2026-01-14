@@ -1,5 +1,5 @@
 package Simulation.Entity.Animal;
-import Simulation.Map;
+import Simulation.World;
 import Simulation.action.TurnAction;
 import Simulation.Entity.Entity;
 import Simulation.Entity.StaticObject.Eat;
@@ -50,7 +50,7 @@ public class Herbivore extends Creature {
 
     public void makeMove() {
         while (true) {
-            if (Map.noFoodFor(this)) {
+            if (World.noFoodFor(this)) {
                 break;
             }
 
@@ -76,7 +76,7 @@ public class Herbivore extends Creature {
                 break;
             }
 
-            Map.moveCreature(this.coordinates, turnAction.pathToFood.get(stepIndex), this);
+            World.moveCreature(this.coordinates, turnAction.pathToFood.get(stepIndex), this);
             stepIndex++;
             TurnAction.movesThisTurn.add(1);
             break;

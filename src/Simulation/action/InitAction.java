@@ -8,7 +8,7 @@ import Simulation.Entity.StaticObject.Tree;
 
 import java.util.Scanner;
 
-import static Simulation.Map.*;
+import static Simulation.World.*;
 
 public class InitAction {
     static Scanner scanner = new Scanner(System.in);
