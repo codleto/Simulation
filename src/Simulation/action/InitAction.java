@@ -11,31 +11,35 @@ import java.util.Scanner;
 import static Simulation.World.*;
 
 public class InitAction {
-    static Scanner scanner = new Scanner(System.in);
-    static int sheepCount;
+    private static final int SMALL = 1;
+    private static final int MEDIUM = 2;
+    private static final int LARGE = 3;
+
+    private static Scanner scanner = new Scanner(System.in);
+    private static int sheepCount;
     private static int wolfAttack;
     private static int wolfSpeed;
 
     public static void chooseMapSize() {
         while (true) {
-            System.out.println("""
-                    Карта 4x4 - жми 1
-                    Карта 5х5 = жми 2
-                    Карта 10х10 - жми 3""");
+            System.out.println(" Карта 4x4 - жми " + SMALL);
+            System.out.println("Карта 5х5 = жми " + MEDIUM);
+            System.out.println("Карта 10х10 - жми " + LARGE);
+
             int userChoice = readNumber();
             if (userChoice > 0 && userChoice < 4) {
-                if (userChoice == 1) {
+                if (userChoice == SMALL) {
                     mapSize = 4;
                 }
-                if (userChoice == 2) {
+                if (userChoice == MEDIUM) {
                     mapSize = 5;
                 }
-                if (userChoice == 3) {
+                if (userChoice == LARGE) {
                     mapSize = 10;
                 }
                 break;
             } else {
-                System.out.println("Введи от 1, 2 или 3");
+                System.out.println("Введи 1, 2 или 3");
             }
         }
     }
