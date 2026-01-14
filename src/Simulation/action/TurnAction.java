@@ -1,24 +1,22 @@
 package Simulation.action;
 
 import Simulation.Coordinates;
-import Simulation.Map;
+import Simulation.World;
 import Simulation.Entity.Animal.Creature;
 
 import Simulation.Entity.StaticObject.Eat;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
+import java.util.*;
 
-import static Simulation.Map.*;
+import static Simulation.World.*;
 
 public class TurnAction {
     private Coordinates startCell;
-    public ArrayList<Coordinates> visitedCells = new ArrayList<>();
-    public HashMap<Coordinates, Coordinates> cameFrom = new HashMap<>();
-    public ArrayList<Coordinates> pathToFood = new ArrayList<>();
-    public static ArrayList<Integer> movesThisTurn = new ArrayList<>();
-    public ArrayList<Integer> foodIndicators = new ArrayList<>();
+    public List<Coordinates> visitedCells = new ArrayList<>();
+    public Map<Coordinates, Coordinates> cameFrom = new HashMap<>();
+    public List<Coordinates> pathToFood = new ArrayList<>();
+    public static List<Integer> movesThisTurn = new ArrayList<>();
+    public List<Integer> foodIndicators = new ArrayList<>();
 
     public void clear() {
         visitedCells.clear();
@@ -53,18 +51,18 @@ public class TurnAction {
 
             for (Coordinates child : childCell) {
                 if (!isInsideMap(child)) {
-                    if (Map.getMap(child) == null) {
+                    if (World.getMap(child) == null) {
                         if (isCellNotVisited(child)) {
                             visitedCells.add(child);
                             cameFrom.put(child, parentCell);
                         }
-                    } else if (creature.eat(Map.getEntity(child))) {
+                    } else if (creature.eat(World.getEntity(child))) {
                         cameFrom.put(child, parentCell);
                         findPathToFood(child);
                         foundFood = true;
                         break;
 
-                    } else if(Map.getEntity(child) instanceof Eat) {
+                    } else if(World.getEntity(child) instanceof Eat) {
                         foodIndicators.add(1);
                     }
                 }

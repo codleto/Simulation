@@ -5,17 +5,15 @@ import Simulation.Entity.Animal.Creature;
 import Simulation.Entity.Animal.Herbivore;
 import Simulation.Entity.Entity;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Random;
+import java.util.*;
 
-public class Map {
+public class World {
     static Random random = new Random();
 
-    private static final HashMap<Coordinates, Entity> map = new HashMap<>();
+    private static final Map<Coordinates, Entity> map = new HashMap<>();
     public static int mapSize = 5;
-    public static ArrayList<Creature> predatorArrayList = new ArrayList<>();
-    public static ArrayList<Creature> herbivoreArrayList = new ArrayList<>();
+    public static List<Creature> predatorArrayList = new ArrayList<>();
+    public static List<Creature> herbivoreArrayList = new ArrayList<>();
 
     public static void spawnEntity(Entity entity) {
         Coordinates position = generateRandomPosition();
