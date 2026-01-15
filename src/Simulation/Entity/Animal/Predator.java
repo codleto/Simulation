@@ -5,7 +5,7 @@ import Simulation.action.TurnAction;
 import Simulation.Entity.Entity;
 
 public class Predator extends Creature {
-    TurnAction turnAction = new TurnAction();
+    private final TurnAction turnAction = new TurnAction();
 
     public Predator(int speed, int attack) {
         super.setSkin("\uD83D\uDC3A");
