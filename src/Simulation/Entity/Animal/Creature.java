@@ -2,22 +2,28 @@ package Simulation.Entity.Animal;
 import Simulation.Entity.Entity;
 
 public abstract class Creature extends Entity {
-    protected int hp = 100;
-    protected int speed = 1;
-    protected int attack = 1;
+    private static final int MAX_HP = 100;
 
-    public abstract int getHp();
-    public abstract void setHp(int hp);
+    protected int hp = MAX_HP;
+    private final int speed;
 
-    public abstract void setSpeed(int speed);
+    protected Creature(int speed){
+        this.speed = speed;
+    }
+    public int getSpeed(){
+        return this.speed;
+    }
 
     public abstract int getAttack();
-    public abstract void setAttack(int attack);
+
+    public abstract int getHp();
+
+    public abstract void setHp(int hp);
 
     public abstract void makeMove();
     public abstract boolean eat(Entity entity);
 
     public void satisfiedItsHunger(){
-        this.hp = 100;
+        this.hp = MAX_HP;
     }
 }
