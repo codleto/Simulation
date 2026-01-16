@@ -5,12 +5,18 @@ import Simulation.action.TurnAction;
 import Simulation.Entity.Entity;
 
 public class Predator extends Creature {
+    private final int attack;
     private final TurnAction turnAction = new TurnAction();
 
     public Predator(int speed, int attack) {
+        super(speed);
+        this.attack = attack;
         super.setSkin("\uD83D\uDC3A");
-        setAttack(attack);
-        setSpeed(speed);
+
+    }
+
+    public int getAttack(){
+        return this.attack;
     }
 
     @Override
@@ -26,32 +32,13 @@ public class Predator extends Creature {
     }
 
     @Override
-    public void setSpeed(int speed) {
-        if(speed >= 0){
-            this.speed = speed;
-        }
-    }
-
-    @Override
-    public int getAttack() {
-        return this.attack;
-    }
-
-    @Override
-    public void setAttack(int attack) {
-        if (attack >= 0) {
-            this.attack = attack;
-        }
-    }
-
-    @Override
     public boolean eat(Entity entity){
         return entity instanceof Herbivore;
     }
 
     public void makeMove() {
         int i = 1;
-        while (speed >= i) {
+        while (getSpeed() >= i) {
 
             if (World.noFoodFor(this)) { // еды больше нет
                 turnAction.clear();
