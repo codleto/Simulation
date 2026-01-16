@@ -7,7 +7,7 @@ public abstract class Entity {
     public Coordinates coordinates;
 
     public String getSkin() {
-        return skin;
+        return this.skin;
     }
     public void setSkin(String skin){
         this.skin = skin;

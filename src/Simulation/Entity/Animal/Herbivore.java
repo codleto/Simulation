@@ -7,8 +7,10 @@ import Simulation.Entity.StaticObject.Eat;
 public class Herbivore extends Creature {
     TurnAction turnAction = new TurnAction();
     private int stepIndex = 0;
+    private int attack = 0;
 
     public Herbivore() {
+        super(1);
         super.setSkin("\uD83D\uDC11");
     }
 
@@ -30,22 +32,8 @@ public class Herbivore extends Creature {
     }
 
     @Override
-    public void setSpeed(int speed) {
-        if(speed >= 0){
-            this.speed = speed;
-        }
-    }
-
-    @Override
     public int getAttack() {
         return this.attack;
-    }
-
-    @Override
-    public void setAttack(int attack) {
-        if (attack >= 0) {
-            this.attack = attack;
-        }
     }
 
     public void makeMove() {
