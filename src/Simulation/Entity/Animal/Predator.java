@@ -11,7 +11,7 @@ public class Predator extends Creature {
     public Predator(int speed, int attack) {
         super(speed);
         this.attack = attack;
-        super.setSkin("\uD83D\uDC3A");
+        super.skin = "\uD83D\uDC3A";
 
     }
 

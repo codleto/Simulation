@@ -11,7 +11,7 @@ public class Herbivore extends Creature {
 
     public Herbivore() {
         super(1);
-        super.setSkin("\uD83D\uDC11");
+        super.skin = "\uD83D\uDC11";
     }
 
     @Override

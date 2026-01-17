@@ -4,7 +4,7 @@ import Simulation.Entity.Entity;
 
 public class Eat extends Entity {
     public Eat() {
-        super.setSkin("\uD83C\uDF2F");
+        super.skin = "\uD83C\uDF2F";
     }
 
 }

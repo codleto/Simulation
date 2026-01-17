@@ -4,6 +4,6 @@ import Simulation.Entity.Entity;
 
 public class Tree extends Entity {
     public Tree() {
-        super.setSkin("\uD83C\uDF33");
+        super.skin = "\uD83C\uDF33";
     }
 }
