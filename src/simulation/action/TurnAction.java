@@ -1,14 +1,14 @@
-package Simulation.action;
+package simulation.action;
 
-import Simulation.Coordinates;
-import Simulation.WorldMap;
-import Simulation.Entity.Animal.Creature;
+import simulation.Coordinates;
+import simulation.WorldMap;
+import simulation.entity.animal.Creature;
 
-import Simulation.Entity.StaticObject.Food;
+import simulation.entity.staticobject.Food;
 
 import java.util.*;
 
-import static Simulation.WorldMap.*;
+import static simulation.WorldMap.*;
 
 public class TurnAction {
     private Coordinates startCell;

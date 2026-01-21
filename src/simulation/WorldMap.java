@@ -1,9 +1,9 @@
-package Simulation;
+package simulation;
 
-import Simulation.Entity.Animal.Creature;
+import simulation.entity.animal.Creature;
 
-import Simulation.Entity.Animal.Herbivore;
-import Simulation.Entity.Entity;
+import simulation.entity.animal.Herbivore;
+import simulation.entity.Entity;
 
 import java.util.*;
 

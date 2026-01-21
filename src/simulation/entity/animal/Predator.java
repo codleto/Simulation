@@ -1,8 +1,8 @@
-package Simulation.Entity.Animal;
+package simulation.entity.animal;
 
-import Simulation.WorldMap;
-import Simulation.action.TurnAction;
-import Simulation.Entity.Entity;
+import simulation.WorldMap;
+import simulation.action.TurnAction;
+import simulation.entity.Entity;
 
 public class Predator extends Creature {
     private final int attack;

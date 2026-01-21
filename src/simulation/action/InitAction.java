@@ -1,14 +1,14 @@
-package Simulation.action;
+package simulation.action;
 
-import Simulation.Entity.Animal.Herbivore;
-import Simulation.Entity.Animal.Predator;
-import Simulation.Entity.StaticObject.Food;
-import Simulation.Entity.StaticObject.Rock;
-import Simulation.Entity.StaticObject.Tree;
+import simulation.entity.animal.Herbivore;
+import simulation.entity.animal.Predator;
+import simulation.entity.staticobject.Food;
+import simulation.entity.staticobject.Rock;
+import simulation.entity.staticobject.Tree;
 
 import java.util.Scanner;
 
-import static Simulation.WorldMap.*;
+import static simulation.WorldMap.*;
 
 public class InitAction {
     private static final int SMALL = 1;

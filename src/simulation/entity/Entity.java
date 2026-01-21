@@ -1,6 +1,6 @@
-package Simulation.Entity;
+package simulation.entity;
 
-import Simulation.Coordinates;
+import simulation.Coordinates;
 
 public abstract class Entity {
     protected String skin;

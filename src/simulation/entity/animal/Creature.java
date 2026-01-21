@@ -1,5 +1,5 @@
-package Simulation.Entity.Animal;
-import Simulation.Entity.Entity;
+package simulation.entity.animal;
+import simulation.entity.Entity;
 
 public abstract class Creature extends Entity {
     private static final int MAX_HP = 100;

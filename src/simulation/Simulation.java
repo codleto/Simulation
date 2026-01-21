@@ -1,13 +1,13 @@
-package Simulation;
+package simulation;
 
-import Simulation.action.TurnAction;
-import Simulation.Entity.StaticObject.Food;
+import simulation.action.TurnAction;
+import simulation.entity.staticobject.Food;
 
-import static Simulation.WorldMap.isFoodAvailableFor;
-import static Simulation.WorldMap.spawnEntity;
-import static Simulation.RendererMap.renderer;
-import static Simulation.action.TurnAction.nextTurn;
-import static Simulation.action.InitAction.*;
+import static simulation.WorldMap.isFoodAvailableFor;
+import static simulation.WorldMap.spawnEntity;
+import static simulation.RendererMap.renderer;
+import static simulation.action.TurnAction.nextTurn;
+import static simulation.action.InitAction.*;
 
 public class Simulation {
     private static final int CONTINUE_GAME = 1;
