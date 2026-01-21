@@ -2,7 +2,7 @@ package Simulation.action;
 
 import Simulation.Entity.Animal.Herbivore;
 import Simulation.Entity.Animal.Predator;
-import Simulation.Entity.StaticObject.Eat;
+import Simulation.Entity.StaticObject.Food;
 import Simulation.Entity.StaticObject.Rock;
 import Simulation.Entity.StaticObject.Tree;
 
@@ -107,7 +107,7 @@ public class InitAction {
         }
 
         for (int i = 0; i < maxGrassCount; i++) {
-            spawnEntity(new Eat());
+            spawnEntity(new Food());
         }
 
         for (int i = 0; i < maxTreeCount; i++) {

@@ -4,7 +4,7 @@ import Simulation.Coordinates;
 import Simulation.World;
 import Simulation.Entity.Animal.Creature;
 
-import Simulation.Entity.StaticObject.Eat;
+import Simulation.Entity.StaticObject.Food;
 
 import java.util.*;
 
@@ -42,11 +42,14 @@ public class TurnAction {
             }
 
             Coordinates parentCell = visitedCells.get(index);
+            if (parentCell == null){
+                return;
+            }
             Coordinates[] childCell = {
-                    new Coordinates(parentCell.vertical, parentCell.horizontal + 1),
-                    new Coordinates(parentCell.vertical + 1, parentCell.horizontal),
-                    new Coordinates(parentCell.vertical, parentCell.horizontal - 1),
-                    new Coordinates(parentCell.vertical - 1, parentCell.horizontal)
+                    new Coordinates(parentCell.row, parentCell.column + 1),
+                    new Coordinates(parentCell.row + 1, parentCell.column),
+                    new Coordinates(parentCell.row, parentCell.column - 1),
+                    new Coordinates(parentCell.row - 1, parentCell.column)
             };
 
             for (Coordinates child : childCell) {
@@ -56,13 +59,13 @@ public class TurnAction {
                             visitedCells.add(child);
                             cameFrom.put(child, parentCell);
                         }
-                    } else if (creature.eat(World.getEntity(child))) {
+                    } else if (creature.eat(World.getEntity(child))) { //
                         cameFrom.put(child, parentCell);
                         findPathToFood(child);
                         foundFood = true;
                         break;
 
-                    } else if(World.getEntity(child) instanceof Eat) {
+                    } else if(World.getEntity(child) instanceof Food) {
                         foodIndicators.add(1);
                     }
                 }

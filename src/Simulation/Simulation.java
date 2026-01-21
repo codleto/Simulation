@@ -1,7 +1,7 @@
 package Simulation;
 
 import Simulation.action.TurnAction;
-import Simulation.Entity.StaticObject.Eat;
+import Simulation.Entity.StaticObject.Food;
 
 import static Simulation.World.isFoodAvailableFor;
 import static Simulation.World.spawnEntity;
@@ -46,7 +46,7 @@ public class Simulation {
             }
 
             if(menuChoice == 2){
-                spawnEntity(new Eat());
+                spawnEntity(new Food());
                 continue;
             }
 
