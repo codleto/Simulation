@@ -1,6 +1,6 @@
 package Simulation.Entity.Animal;
 
-import Simulation.World;
+import Simulation.WorldMap;
 import Simulation.action.TurnAction;
 import Simulation.Entity.Entity;
 
@@ -40,7 +40,7 @@ public class Predator extends Creature {
         int i = 1;
         while (getSpeed() >= i) {
 
-            if (World.noFoodFor(this)) { // еды больше нет
+            if (WorldMap.noFoodFor(this)) { // еды больше нет
                 turnAction.clear();
                 return;
             }
@@ -56,7 +56,7 @@ public class Predator extends Creature {
                 return;
             }
 
-            World.moveCreature(this.coordinates, turnAction.pathToFood.getFirst(), this);
+            WorldMap.moveCreature(this.coordinates, turnAction.pathToFood.getFirst(), this);
             TurnAction.movesThisTurn.add(1);
             i++;
         }

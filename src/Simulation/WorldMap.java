@@ -7,7 +7,7 @@ import Simulation.Entity.Entity;
 
 import java.util.*;
 
-public class World {
+public class WorldMap {
     static Random random = new Random();
 
     private static final Map<Coordinates, Entity> map = new HashMap<>();
@@ -82,7 +82,7 @@ public class World {
             Simulation.moveCount++;
     }
     public static boolean isInsideMap(Coordinates coordinates) {
-        return (coordinates.vertical > mapSize || coordinates.vertical < 0 || coordinates.horizontal > mapSize || coordinates.horizontal < 0);
+        return (coordinates.row > mapSize || coordinates.row < 0 || coordinates.column > mapSize || coordinates.column < 0);
     }
     public static Entity getMap(Coordinates coordinates){
         return map.get(coordinates);

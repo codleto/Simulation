@@ -1,14 +1,14 @@
 package Simulation.action;
 
 import Simulation.Coordinates;
-import Simulation.World;
+import Simulation.WorldMap;
 import Simulation.Entity.Animal.Creature;
 
 import Simulation.Entity.StaticObject.Food;
 
 import java.util.*;
 
-import static Simulation.World.*;
+import static Simulation.WorldMap.*;
 
 public class TurnAction {
     private Coordinates startCell;
@@ -54,18 +54,18 @@ public class TurnAction {
 
             for (Coordinates child : childCell) {
                 if (!isInsideMap(child)) {
-                    if (World.getMap(child) == null) {
+                    if (WorldMap.getMap(child) == null) {
                         if (isCellNotVisited(child)) {
                             visitedCells.add(child);
                             cameFrom.put(child, parentCell);
                         }
-                    } else if (creature.eat(World.getEntity(child))) { //
+                    } else if (creature.eat(WorldMap.getEntity(child))) { //
                         cameFrom.put(child, parentCell);
                         findPathToFood(child);
                         foundFood = true;
                         break;
 
-                    } else if(World.getEntity(child) instanceof Food) {
+                    } else if(WorldMap.getEntity(child) instanceof Food) {
                         foodIndicators.add(1);
                     }
                 }
