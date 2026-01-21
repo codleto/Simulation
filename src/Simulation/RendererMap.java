@@ -2,7 +2,7 @@ package Simulation;
 
 import static Simulation.WorldMap.mapSize;
 
-public class Renderer {
+public class RendererMap {
 
     public static void renderer() {
         for (int gorizontal = mapSize; gorizontal >= 0; gorizontal--) {

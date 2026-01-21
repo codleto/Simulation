@@ -5,7 +5,7 @@ import Simulation.Entity.StaticObject.Food;
 
 import static Simulation.WorldMap.isFoodAvailableFor;
 import static Simulation.WorldMap.spawnEntity;
-import static Simulation.Renderer.renderer;
+import static Simulation.RendererMap.renderer;
 import static Simulation.action.TurnAction.nextTurn;
 import static Simulation.action.InitAction.*;
 
