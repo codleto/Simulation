@@ -1,5 +1,6 @@
-package simulation;
+package simulation.map;
 
+import simulation.Simulation;
 import simulation.entity.animal.Creature;
 
 import simulation.entity.animal.Herbivore;
@@ -84,9 +85,7 @@ public class WorldMap {
     public static boolean isInsideMap(Coordinates coordinates) {
         return (coordinates.row > mapSize || coordinates.row < 0 || coordinates.column > mapSize || coordinates.column < 0);
     }
-    public static Entity getMap(Coordinates coordinates){
-        return map.get(coordinates);
-    }
+
     public static Entity getMap(int vertical, int horizontal) {
         return map.get(new Coordinates(vertical, horizontal));
     }
