@@ -1,33 +1,25 @@
-package simulation.action;
+package simulation.algorithm;
 
 import simulation.entity.Entity;
 import simulation.map.Coordinates;
 import simulation.map.WorldMap;
-import simulation.entity.animal.Creature;
-
-import simulation.entity.staticobject.Food;
 
 import java.util.*;
 
 import static simulation.map.WorldMap.*;
 
-public class TurnAction {
+public class BFS {
     private Coordinates startCell;
-    public List<Coordinates> visitedCells = new ArrayList<>();
-    public Map<Coordinates, Coordinates> cameFrom = new HashMap<>();
-    public List<Coordinates> pathToFood = new ArrayList<>();
+    private final List<Coordinates> visitedCells = new ArrayList<>();
+    private final Map<Coordinates, Coordinates> cameFrom = new HashMap<>();
+    private final List<Coordinates> pathToFood = new ArrayList<>();
     public static List<Integer> movesThisTurn = new ArrayList<>();
-    public List<Integer> foodIndicators = new ArrayList<>();
 
-    public void clear() {
-        visitedCells.clear();
-        cameFrom.clear();
-        pathToFood.clear();
-        startCell = null;
-        foodIndicators.clear();
+    public List<Coordinates> getPathToFood(){
+        return pathToFood;
     }
 
-    public boolean isCellNotVisited(Coordinates coordinates) {
+    private boolean isCellNotVisited(Coordinates coordinates) {
         return !visitedCells.contains(coordinates);
     }
 
@@ -67,8 +59,6 @@ public class TurnAction {
                         foundFood = true;
                         break;
 
-                    } else if(entityAtCell instanceof Food) {
-                        foodIndicators.add(1);
                     }
                 }
             }
@@ -76,7 +66,7 @@ public class TurnAction {
         }
     }
 
-    public void findPathToFood(Coordinates coordinates) {
+    private void findPathToFood(Coordinates coordinates) {
         pathToFood.clear();
         Coordinates childCell = coordinates;
 
@@ -96,12 +86,5 @@ public class TurnAction {
             }
         }
         Collections.reverse(pathToFood);
-    }
-
-    public static void nextTurn(){
-        for(Creature herbivore : herbivoreArrayList){
-            herbivore.makeMove();
-        }
-        predatorArrayList.getFirst().makeMove();
     }
 }
