@@ -1,12 +1,12 @@
 package simulation;
 
-import simulation.action.TurnAction;
+import simulation.algorithm.BFS;
 import simulation.entity.staticobject.Food;
 
-import static simulation.WorldMap.isFoodAvailableFor;
-import static simulation.WorldMap.spawnEntity;
-import static simulation.RendererMap.renderer;
-import static simulation.action.TurnAction.nextTurn;
+import static simulation.map.WorldMap.isFoodAvailableFor;
+import static simulation.map.WorldMap.spawnEntity;
+import static simulation.util.RendererMap.renderer;
+import static simulation.action.TuAc.nextTurn;
 import static simulation.action.InitAction.*;
 
 public class Simulation {
@@ -98,8 +98,8 @@ class SimulationRunner extends Thread {
                 } catch (InterruptedException e) {
                     throw new RuntimeException(e);
                 }
-                if (!TurnAction.movesThisTurn.isEmpty()) {
-                    TurnAction.movesThisTurn.clear();
+                if (!BFS.movesThisTurn.isEmpty()) {
+                    BFS.movesThisTurn.clear();
                     continue;
                 }
                 break;

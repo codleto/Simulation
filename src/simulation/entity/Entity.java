@@ -1,6 +1,6 @@
 package simulation.entity;
 
-import simulation.Coordinates;
+import simulation.map.Coordinates;
 
 public abstract class Entity {
     protected String skin;

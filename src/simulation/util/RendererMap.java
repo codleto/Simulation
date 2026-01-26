@@ -1,6 +1,8 @@
-package simulation;
+package simulation.util;
 
-import static simulation.WorldMap.mapSize;
+import simulation.map.WorldMap;
+
+import static simulation.map.WorldMap.mapSize;
 
 public class RendererMap {
 
