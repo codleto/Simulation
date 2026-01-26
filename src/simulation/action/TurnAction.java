@@ -1,14 +1,15 @@
 package simulation.action;
 
-import simulation.Coordinates;
-import simulation.WorldMap;
+import simulation.entity.Entity;
+import simulation.map.Coordinates;
+import simulation.map.WorldMap;
 import simulation.entity.animal.Creature;
 
 import simulation.entity.staticobject.Food;
 
 import java.util.*;
 
-import static simulation.WorldMap.*;
+import static simulation.map.WorldMap.*;
 
 public class TurnAction {
     private Coordinates startCell;
@@ -30,7 +31,7 @@ public class TurnAction {
         return !visitedCells.contains(coordinates);
     }
 
-    public void searchForFood(Coordinates coordinates, Creature creature) {
+    public void searchForFood(Coordinates coordinates, Class<? extends Entity> food) {
         startCell = coordinates;
         visitedCells.add(coordinates);
 
@@ -53,19 +54,20 @@ public class TurnAction {
             };
 
             for (Coordinates child : childCell) {
+            Entity entityAtCell = (WorldMap.getEntity(child));
                 if (!isInsideMap(child)) {
-                    if (WorldMap.getMap(child) == null) {
+                    if (entityAtCell == null) {
                         if (isCellNotVisited(child)) {
                             visitedCells.add(child);
                             cameFrom.put(child, parentCell);
                         }
-                    } else if (creature.eat(WorldMap.getEntity(child))) { //
+                    } else if (food.isInstance(entityAtCell)) {
                         cameFrom.put(child, parentCell);
                         findPathToFood(child);
                         foundFood = true;
                         break;
 
-                    } else if(WorldMap.getEntity(child) instanceof Food) {
+                    } else if(entityAtCell instanceof Food) {
                         foodIndicators.add(1);
                     }
                 }
