@@ -1,11 +1,10 @@
 package simulation.entity.animal;
-import simulation.WorldMap;
-import simulation.action.TurnAction;
+import simulation.map.WorldMap;
+import simulation.algorithm.BFS;
 import simulation.entity.Entity;
 import simulation.entity.staticobject.Food;
 
 public class Herbivore extends Creature {
-    TurnAction turnAction = new TurnAction();
     private int stepIndex = 0;
     private int attack = 0;
 
@@ -28,6 +27,8 @@ public class Herbivore extends Creature {
     public void setHp(int hp){
         if(hp >= 0 && hp <= 100){
             this.hp = hp;
+        } else {
+            this.hp = 0;
         }
     }
 
@@ -37,7 +38,8 @@ public class Herbivore extends Creature {
     }
 
     public void makeMove() {
-        while (true) {
+        BFS bfs = new BFS();
+       while (true) {
             if (WorldMap.noFoodFor(this)) {
                 break;
             }
@@ -47,26 +49,21 @@ public class Herbivore extends Creature {
             }
 
             if (stepIndex == 0) {
-                turnAction.searchForFood(this.coordinates, this);
+                bfs.searchForFood(this.coordinates, Food.class);
             }
 
-            if (stepIndex >= turnAction.pathToFood.size() && stepIndex > 0) {
-                turnAction.clear();
+            if (stepIndex >= bfs.getPathToFood().size() && stepIndex > 0) {
                 stepIndex = 0;
                 continue;
             }
 
-            if (turnAction.pathToFood.isEmpty() && turnAction.foodIndicators.isEmpty()) {// если все пусто
-                return;
-            }
-
-            if(turnAction.pathToFood.isEmpty()){
+            if (bfs.getPathToFood().isEmpty()) {
                 break;
             }
 
-            WorldMap.moveCreature(this.coordinates, turnAction.pathToFood.get(stepIndex), this);
+            WorldMap.moveCreature(this.coordinates, bfs.getPathToFood().get(stepIndex), this);
             stepIndex++;
-            TurnAction.movesThisTurn.add(1);
+            BFS.movesThisTurn.add(1);
             break;
         }
     }
