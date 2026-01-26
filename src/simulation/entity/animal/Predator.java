@@ -1,12 +1,11 @@
 package simulation.entity.animal;
 
-import simulation.WorldMap;
-import simulation.action.TurnAction;
+import simulation.map.WorldMap;
+import simulation.algorithm.BFS;
 import simulation.entity.Entity;
 
 public class Predator extends Creature {
     private final int attack;
-    private final TurnAction turnAction = new TurnAction();
 
     public Predator(int speed, int attack) {
         super(speed);
@@ -36,28 +35,23 @@ public class Predator extends Creature {
         return entity instanceof Herbivore;
     }
 
-    public void makeMove() {
+    public void makeMove() {// todo: код поиска должен быть одинаковый и находиться в creature
+        final BFS bfs = new BFS();
         int i = 1;
         while (getSpeed() >= i) {
 
             if (WorldMap.noFoodFor(this)) { // еды больше нет
-                turnAction.clear();
                 return;
             }
 
-            turnAction.clear();
-            turnAction.searchForFood(this.coordinates, this); // если только начали искать еду первый раз
+            bfs.searchForFood(this.coordinates, Herbivore.class); // если только начали искать еду первый раз
 
-            if (turnAction.pathToFood.isEmpty() && turnAction.foodIndicators.isEmpty()) { // если все пусто
+            if (bfs.getPathToFood().isEmpty()) { // если все пусто
                 return;
             }
 
-            if (turnAction.pathToFood.isEmpty()) {// если путь пустой
-                return;
-            }
-
-            WorldMap.moveCreature(this.coordinates, turnAction.pathToFood.getFirst(), this);
-            TurnAction.movesThisTurn.add(1);
+            WorldMap.moveCreature(this.coordinates, bfs.getPathToFood().getFirst(), this);
+            BFS.movesThisTurn.add(1);
             i++;
         }
     }
