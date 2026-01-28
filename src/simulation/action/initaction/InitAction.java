@@ -1,24 +1,13 @@
-package simulation.action;
+package simulation.action.initaction;
 
-import simulation.entity.animal.Herbivore;
-import simulation.entity.animal.Predator;
-import simulation.entity.staticobject.Food;
-import simulation.entity.staticobject.Rock;
-import simulation.entity.staticobject.Tree;
-
-import java.util.Scanner;
-
+import static simulation.action.ConsoleInput.readNumber;
 import static simulation.map.WorldMap.*;
+import static simulation.action.initaction.GameConfig.*;
 
 public class InitAction {
     private static final int SMALL = 1;
     private static final int MEDIUM = 2;
     private static final int LARGE = 3;
-
-    private static Scanner scanner = new Scanner(System.in);
-    private static int sheepCount;
-    private static int wolfAttack;
-    private static int wolfSpeed;
 
     public static void chooseMapSize() {
         while (true) {
@@ -72,49 +61,6 @@ public class InitAction {
         }
     }
 
-    public static void initializeWorld() {
-        int maxRockCount = 0;
-        int maxGrassCount = 0;
-        int maxTreeCount = 0;
-
-        if (mapSize == 4) {
-            maxRockCount = 4;
-            maxGrassCount = 6;
-            maxTreeCount = 4;
-        }
-        if (mapSize == 5) {
-            maxRockCount = 6;
-            maxGrassCount = 8;
-            maxTreeCount = 6;
-        }
-        if (mapSize == 10) {
-            maxRockCount = 11;
-            maxGrassCount = 15;
-            maxTreeCount = 11;
-        }
-        predatorArrayList.add(new Predator(wolfSpeed, wolfAttack));
-        spawnEntity(predatorArrayList.getFirst());
-
-
-        for (int i = 0; i < sheepCount; i++) {
-            herbivoreArrayList.add(new Herbivore());
-            spawnEntity(herbivoreArrayList.get(i));
-
-        }
-
-        for (int i = 0; i < maxRockCount; i++) {
-            spawnEntity(new Rock());
-        }
-
-        for (int i = 0; i < maxGrassCount; i++) {
-            spawnEntity(new Food());
-        }
-
-        for (int i = 0; i < maxTreeCount; i++) {
-            spawnEntity(new Tree());
-        }
-    }
-
     public static void setWolfAttackPower() {
         while (true) {
             System.out.println("Введи силу атаки волка от 1 до 100");
@@ -131,23 +77,13 @@ public class InitAction {
     public static void setWolfSpeed(){
         while (true) {
             System.out.println("Введи скорость волка от 1 до 5 шагов");
-            int wolfSpeed = readNumber();
-            if (wolfSpeed > 0 && wolfSpeed <= 5) {
-                InitAction.wolfSpeed = wolfSpeed;
+            int userWolfSpeed = readNumber();
+            if (userWolfSpeed > 0 && userWolfSpeed <= 5) {
+                wolfSpeed = userWolfSpeed;
                 break;
             } else {
                 System.out.println("Ты вышел из диапазона. Пожалуйста введи скорость от 1 до 5 шагов");
             }
-        }
-    }
-
-    public static int readNumber(){
-        while (true){
-            String input = scanner.nextLine().trim();
-            if(input.matches("\\d+")){
-                return Integer.parseInt(input);
-            }
-            System.out.println("Введи число без символов и букв");
         }
     }
 }

@@ -13,7 +13,7 @@ public class RendererMap {
                 if(WorldMap.getMap(vertical, gorizontal) == null){
                     System.out.print("\u001b[42m   ");
                 } else {
-                    System.out.print("\u001b[42m " + WorldMap.getSkins(vertical, gorizontal));
+                    System.out.print("\u001b[42m " + WorldMap.getEntity(vertical, gorizontal).getSkin());
                 }System.out.print("\u001B[0m");
 
             }

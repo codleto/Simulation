@@ -1,8 +1,10 @@
 package simulation.entity.animal;
 
-import simulation.map.WorldMap;
 import simulation.algorithm.BFS;
 import simulation.entity.Entity;
+
+import static simulation.action.Food.noFoodFor;
+import static simulation.action.Move.moveCreature;
 
 public class Predator extends Creature {
     private final int attack;
@@ -40,7 +42,7 @@ public class Predator extends Creature {
         int i = 1;
         while (getSpeed() >= i) {
 
-            if (WorldMap.noFoodFor(this)) { // еды больше нет
+            if (noFoodFor(this)) { // еды больше нет
                 return;
             }
 
@@ -50,7 +52,8 @@ public class Predator extends Creature {
                 return;
             }
 
-            WorldMap.moveCreature(this.coordinates, bfs.getPathToFood().getFirst(), this);
+
+            moveCreature(this.coordinates, bfs.getPathToFood().getFirst(), this);
             BFS.movesThisTurn.add(1);
             i++;
         }

@@ -3,17 +3,20 @@ package simulation;
 import simulation.algorithm.BFS;
 import simulation.entity.staticobject.Food;
 
-import static simulation.map.WorldMap.isFoodAvailableFor;
-import static simulation.map.WorldMap.spawnEntity;
+import static simulation.action.ConsoleInput.readNumber;
+import static simulation.action.Food.isFoodAvailableFor;
+import static simulation.action.turnaction.Spawn.spawnEntity;
+
+import static simulation.action.initaction.WorldFactory.initializeWorld;
 import static simulation.util.RendererMap.renderer;
-import static simulation.action.TuAc.nextTurn;
-import static simulation.action.InitAction.*;
+import static simulation.action.turnaction.NextTurn.nextTurn;
+import static simulation.action.initaction.InitAction.*;
 
 public class Simulation {
     private static final int CONTINUE_GAME = 1;
     private static final int EXIT_GAME_FROM_PAUSE = 2;
 
-    public static int moveCount = 0;
+    public static int moveCount = 0; //todo: счетчик должен быть в отдельном классе или в другом а может и нет
     public static void startSimulation() {
         SimulationRunner runner = new SimulationRunner();
 
