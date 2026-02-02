@@ -6,7 +6,7 @@ import simulation.entity.animal.Herbivore;
 
 import static simulation.map.WorldMap.getValue;
 
-public class Food { //todo: проверить на S
+public class Grass { //todo: проверить на S
 
     public static boolean isFoodAvailableFor() {
         for (Entity entry : getValue()) {
