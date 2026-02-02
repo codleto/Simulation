@@ -5,9 +5,9 @@ import static simulation.map.WorldMap.*;
 import static simulation.action.initaction.GameConfig.*;
 
 public class InitAction {
-    private static final int SMALL = 1;
-    private static final int MEDIUM = 2;
-    private static final int LARGE = 3;
+    private static final int SMALL = 4;
+    private static final int MEDIUM = 5;
+    private static final int LARGE = 10;
 
     public static void chooseMapSize() {
         while (true) {
@@ -17,14 +17,14 @@ public class InitAction {
 
             int userChoice = readNumber();
             if (userChoice > 0 && userChoice < 4) {
-                if (userChoice == SMALL) {
-                    mapSize = 4;
+                if (userChoice == 1) {
+                    mapSize = SMALL;
                 }
-                if (userChoice == MEDIUM) {
-                    mapSize = 5;
+                if (userChoice == 2) {
+                    mapSize = MEDIUM;
                 }
-                if (userChoice == LARGE) {
-                    mapSize = 10;
+                if (userChoice == 3) {
+                    mapSize = LARGE;
                 }
                 break;
             } else {
