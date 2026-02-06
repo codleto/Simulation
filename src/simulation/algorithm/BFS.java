@@ -6,14 +6,16 @@ import simulation.map.WorldMap;
 
 import java.util.*;
 
-import static simulation.map.WorldMap.*;
-
 public class BFS {
+    private final WorldMap map;
+
+    public BFS(WorldMap map){
+        this.map = map;
+    }
     private Coordinates startCell;
     private final List<Coordinates> visitedCells = new ArrayList<>();
     private final Map<Coordinates, Coordinates> cameFrom = new HashMap<>();
     private final List<Coordinates> pathToFood = new ArrayList<>();
-    public static List<Integer> movesThisTurn = new ArrayList<>();
 
     public List<Coordinates> getPathToFood(){
         return pathToFood;
@@ -46,8 +48,8 @@ public class BFS {
             };
 
             for (Coordinates child : childCell) {
-            Entity entityAtCell = (WorldMap.getEntity(child));
-                if (!isInsideMap(child)) {
+            Entity entityAtCell = (map.getEntity(child));
+                if (!map.isInsideMap(child)) {
                     if (entityAtCell == null) {
                         if (isCellNotVisited(child)) {
                             visitedCells.add(child);

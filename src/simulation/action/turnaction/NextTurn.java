@@ -1,15 +1,13 @@
 package simulation.action.turnaction;
 
 import simulation.entity.animal.Creature;
-
-import static simulation.map.WorldMap.herbivoreArrayList;
-import static simulation.map.WorldMap.predatorArrayList;
+import simulation.map.WorldMap;
+import static simulation.map.WorldMap.CreatureList;
 
 public class NextTurn {
-    public static void nextTurn(){
-        for(Creature herbivore : herbivoreArrayList){ //todo: через  wildcard нужно исправить эти списки
-            herbivore.makeMove();
+    public void nextTurn(WorldMap map){
+        for(Creature creature : CreatureList){
+            creature.makeMove(map);
         }
-        predatorArrayList.getFirst().makeMove();
     }
 }

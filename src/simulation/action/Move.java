@@ -1,17 +1,19 @@
 package simulation.action;
 
-import simulation.Simulation;
 import simulation.entity.Entity;
 import simulation.entity.animal.Creature;
 import simulation.map.Coordinates;
-
-import static simulation.map.WorldMap.*;
-import static simulation.map.WorldMap.removeEntity;
+import simulation.map.WorldMap;
 
 public class Move {
-    public static void moveCreature(Coordinates from , Coordinates to, Creature mover){
-        Creature movingCreature = (Creature) getMap(from);
-        Entity target = getMap(to);
+    private final WorldMap map;
+
+    public Move(WorldMap map){
+        this.map = map;
+    }
+    public void moveCreature(Coordinates from , Coordinates to, Creature mover){
+        Creature movingCreature = (Creature) map.getMap(from);
+        Entity target = map.getMap(to);
 
         if (target != null && mover.eat(target)) {
             if (target instanceof Creature){
@@ -21,17 +23,16 @@ public class Move {
                     return;
                 }
             }
-            removeEntity(to);
-            target.coordinates = null;
+            map.removeEntity(to);
+            target.setCoordinates(null);
             mover.satisfiedItsHunger();
         }
         if (target != null && !mover.eat(target)) {
             return;
         }
 
-        removeEntity(from);
-        mover.coordinates = to;
-        addEntity(to, movingCreature);
-        Simulation.moveCount++;
+        map.removeEntity(from);
+        mover.setCoordinates(to);
+        map.addEntity(to, movingCreature);
     }
 }

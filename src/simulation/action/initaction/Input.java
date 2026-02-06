@@ -1,10 +1,9 @@
-package simulation.action;
+package simulation.action.initaction;
 
 import java.util.Scanner;
 
-public class ConsoleInput {
-
-    public static int readNumber(){
+public class Input {
+    public int readNumber(){
         Scanner scanner = new Scanner(System.in);
         while (true){
             String input = scanner.nextLine().trim();

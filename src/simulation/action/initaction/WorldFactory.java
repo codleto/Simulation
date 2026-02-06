@@ -1,58 +1,71 @@
 package simulation.action.initaction;
 
+import simulation.action.turnaction.Spawn;
 import simulation.entity.animal.Herbivore;
 import simulation.entity.animal.Predator;
 import simulation.entity.staticobject.Food;
 import simulation.entity.staticobject.Rock;
 import simulation.entity.staticobject.Tree;
-
-import static simulation.action.turnaction.Spawn.spawnEntity;
-import static simulation.map.WorldMap.*;
-import static simulation.map.WorldMap.herbivoreArrayList;
-import static simulation.action.initaction.GameConfig.*;
+import static simulation.map.WorldMap.CreatureList;
 
 public class WorldFactory {
-    public static void initializeWorld() {
-        int maxRockCount = 0;
-        int maxGrassCount = 0;
-        int maxTreeCount = 0;
+    private int maxRockCount;
+    private int maxGrassCount;
+    private int maxTreeCount;
+    private final Spawn spawn;
 
-        if (mapSize == 4) {
+    public WorldFactory(Spawn spawn){
+        this.spawn = spawn;
+    }
+
+    public int getMaxRockCount() {
+        return maxRockCount;
+    }
+    public int getMaxGrassCount() {
+        return maxGrassCount;
+    }
+    public int getMaxTreeCount() {
+        return maxTreeCount;
+    }
+
+    public void initializeWorld(GameConfig config) {
+
+        if (config.mapSize() == 4) {
             maxRockCount = 4;
             maxGrassCount = 6;
             maxTreeCount = 4;
         }
-        if (mapSize == 5) {
+        if (config.mapSize() == 5) {
             maxRockCount = 6;
             maxGrassCount = 8;
             maxTreeCount = 6;
         }
-        if (mapSize == 10) {
+        if (config.mapSize() == 10) {
             maxRockCount = 11;
             maxGrassCount = 15;
             maxTreeCount = 11;
         }
-        predatorArrayList.add(new Predator(wolfSpeed, wolfAttack));
-        spawnEntity(predatorArrayList.getFirst());
+
+        CreatureList.add(new Predator(config.speed(), config.attack()));
+        spawn.spawnEntity(new Predator(config.speed(), config.attack()));
 
 
-        for (int i = 0; i < sheepCount; i++) {
-            herbivoreArrayList.add(new Herbivore());
-            spawnEntity(herbivoreArrayList.get(i));
+        for (int i = 0; i < config.herbivoreCount(); i++) {
+            CreatureList.add(new Herbivore());
+            spawn.spawnEntity(new Herbivore());
 
         }
 
-        for (int i = 0; i < maxRockCount; i++) {
-            spawnEntity(new Rock());
+        for (int i = 0; i < getMaxRockCount(); i++) {
+            spawn.spawnEntity(new Rock());
         }
 
-        for (int i = 0; i < maxGrassCount; i++) {
-            spawnEntity(new Food());
+        for (int i = 0; i < getMaxGrassCount(); i++) {
+            spawn.spawnEntity(new Food());
         }
 
-        for (int i = 0; i < maxTreeCount; i++) {
-            spawnEntity(new Tree());
+        for (int i = 0; i < getMaxTreeCount(); i++) {
+            spawn.spawnEntity(new Tree());
         }
     }
-
 }

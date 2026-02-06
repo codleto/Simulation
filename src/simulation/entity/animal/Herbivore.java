@@ -1,11 +1,10 @@
 package simulation.entity.animal;
+import simulation.action.Grass;
+import simulation.action.Move;
 import simulation.algorithm.BFS;
 import simulation.entity.Entity;
 import simulation.entity.staticobject.Food;
-import simulation.action.*;
-
-import static simulation.action.Food.noFoodFor;
-import static simulation.action.Move.moveCreature;
+import simulation.map.WorldMap;
 
 public class Herbivore extends Creature {
     private int stepIndex = 0;
@@ -31,27 +30,30 @@ public class Herbivore extends Creature {
     }
 
     @Override
-    public void setHp(int hp){
-        if(hp >= 0 && hp <= 100){
-            this.hp = hp;
-        } else {
+    public void setHp(int damage){
+        if(damage > this.hp){
             this.hp = 0;
+        } else {
+            this.hp -= damage;
         }
     }
 
-    public void makeMove() {
-        BFS bfs = new BFS();
+    public void makeMove(WorldMap map) {
+        BFS bfs = new BFS(map);
+        Move move = new Move(map);
+        Grass grass = new Grass(map);
+
        while (true) {
-            if (noFoodFor(this)) {
+            if (grass.noFoodFor(this)) {
                 break;
             }
 
-            if(this.coordinates == null){
+            if(this.getCoordinates() == null){
                 break;
             }
 
             if (stepIndex == 0) {
-                bfs.searchForFood(this.coordinates, Food.class);
+                bfs.searchForFood(this.getCoordinates(), Food.class);
             }
 
             if (stepIndex >= bfs.getPathToFood().size() && stepIndex > 0) {
@@ -64,9 +66,8 @@ public class Herbivore extends Creature {
             }
 
 
-            moveCreature(this.coordinates, bfs.getPathToFood().get(stepIndex), this);
+            move.moveCreature(this.getCoordinates(), bfs.getPathToFood().get(stepIndex), this);
             stepIndex++;
-            BFS.movesThisTurn.add(1);
             break;
         }
     }

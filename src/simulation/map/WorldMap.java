@@ -6,41 +6,50 @@ import java.util.*;
 
 public class WorldMap {
 
-    private static final Map<Coordinates, Entity> map = new HashMap<>();
-    public static int mapSize = 5;
-    public static List<Creature> predatorArrayList = new ArrayList<>(); // todo: сделать один список
-    public static List<Creature> herbivoreArrayList = new ArrayList<>();// todo: сделать один список
+    private final Map<Coordinates, Entity> map = new HashMap<>();
+    private int mapSize = 5;
+    public static List<Creature> CreatureList = new ArrayList<>();
 
-    public static void addEntity(Coordinates coordinates, Entity entity ){
+    public void setMapSize(int mapSize) {
+        if(mapSize >= 5){
+            this.mapSize = mapSize;
+        }
+    }
+
+    public int getMapSize(){
+        return mapSize;
+    }
+
+    public void addEntity(Coordinates coordinates, Entity entity ){
         map.put(coordinates, entity);
     }
 
-    public static void removeEntity(Coordinates coordinates){
+    public void removeEntity(Coordinates coordinates){
         map.remove(coordinates);
     }
 
-    public static Collection<Entity> getValue(){
+    public Collection<Entity> getValue(){
         return map.values();
     }
 
-    public static Entity getEntity(Coordinates coordinates){
+    public Entity getEntity(Coordinates coordinates){
         return map.get(coordinates);
     }
 
-    public static Entity getEntity(int row, int column) {
+    public Entity getEntity(int row, int column) {
         return map.get(new Coordinates(row, column));
     }
 
 
-    public static boolean isInsideMap(Coordinates coordinates) {
+    public boolean isInsideMap(Coordinates coordinates) {
         return (coordinates.row > mapSize || coordinates.row < 0 || coordinates.column > mapSize || coordinates.column < 0);
     }
 
-    public static Entity getMap(int vertical, int horizontal) {
+    public Entity getMap(int vertical, int horizontal) {
         return map.get(new Coordinates(vertical, horizontal));
     }
 
-    public static Entity getMap(Coordinates coordinates) {
+    public Entity getMap(Coordinates coordinates) {
         return map.get(coordinates);
     }
 }

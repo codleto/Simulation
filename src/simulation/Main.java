@@ -1,8 +1,10 @@
 package simulation;
 
 public class Main {
+
     public static void main(String[] args) {
-        Simulation.startSimulation();
+        Simulation simulation = new Simulation();
+        simulation.startSimulation();
     }
 
 }

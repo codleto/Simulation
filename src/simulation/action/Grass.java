@@ -3,13 +3,21 @@ package simulation.action;
 import simulation.entity.Entity;
 import simulation.entity.animal.Creature;
 import simulation.entity.animal.Herbivore;
+import simulation.map.WorldMap;
 
-import static simulation.map.WorldMap.getValue;
+import java.util.ArrayList;
+import java.util.List;
+
 
 public class Grass { //todo: проверить на S
+    private final WorldMap map;
 
-    public static boolean isFoodAvailableFor() {
-        for (Entity entry : getValue()) {
+    public Grass(WorldMap map){
+        this.map = map;
+    }
+
+    public boolean isFoodAvailableFor() {
+        for (Entity entry : map.getValue()) {
             if (entry instanceof Herbivore) {
                 return false;
             }
@@ -17,8 +25,8 @@ public class Grass { //todo: проверить на S
         return true;
     }
 
-    public static boolean noFoodFor(Creature creature){
-        for(Entity entry : getValue()){
+    public boolean noFoodFor(Creature creature){
+        for(Entity entry : map.getValue()){
             if(entry != creature && creature.eat(entry)){
                 return false;
             }

@@ -1,32 +1,18 @@
 package simulation.action.initaction;
 
-public class GameConfig {
+public record GameConfig(int mapSize, int herbivoreCount, int attack, int speed) {
 
-    private final int sheepCount;
-    private final int wolfAttack;
-    private final int wolfSpeed;
-
-    public GameConfig(int sheepCount, int wolfAttack, int wolfSpeed){
-        if(sheepCount > 0 && wolfAttack > 0 && wolfSpeed > 0){
-            this.sheepCount = sheepCount;
-            this.wolfAttack = wolfAttack;
-            this.wolfSpeed = wolfSpeed;
+    public GameConfig(int mapSize, int herbivoreCount, int attack, int speed) {
+        if (herbivoreCount > 0 && attack > 0 && speed > 0) {
+            this.mapSize = mapSize;
+            this.herbivoreCount = herbivoreCount;
+            this.attack = attack;
+            this.speed = speed;
         } else {
-            this.sheepCount = 1;
-            this.wolfAttack = 1;
-            this.wolfSpeed = 1;
+            this.mapSize = 5;
+            this.herbivoreCount = 1;
+            this.attack = 1;
+            this.speed = 1;
         }
-    }
-
-    public int getSheepCount(){
-        return sheepCount;
-    }
-
-    public int getWolfAttack(){
-        return wolfAttack;
-    }
-
-    public int getWolfSpeed(){
-        return wolfSpeed;
     }
 }

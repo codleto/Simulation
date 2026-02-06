@@ -1,55 +1,48 @@
 package simulation;
 
-import simulation.algorithm.BFS;
+import simulation.action.Grass;
+import simulation.action.initaction.*;
+import simulation.action.turnaction.NextTurn;
+import simulation.action.turnaction.Spawn;
 import simulation.entity.staticobject.Food;
-
-import static simulation.action.ConsoleInput.readNumber;
-import static simulation.action.Food.isFoodAvailableFor;
-import static simulation.action.turnaction.Spawn.spawnEntity;
-
-import static simulation.action.initaction.WorldFactory.initializeWorld;
-import static simulation.util.RendererMap.renderer;
-import static simulation.action.turnaction.NextTurn.nextTurn;
-import static simulation.action.initaction.InitAction.*;
+import simulation.map.WorldMap;
+import simulation.util.RendererMap;
 
 public class Simulation {
     private static final int CONTINUE_GAME = 1;
-    private static final int EXIT_GAME_FROM_PAUSE = 2;
+    WorldMap worldMap = new WorldMap();
+    Spawn spawn = new Spawn(worldMap);
+    SimulationRunner runner = new SimulationRunner(worldMap);
+    WorldFactory worldFactory = new WorldFactory(spawn);
+    InitAction initAction = new InitAction();
+    Thread thread = new Thread(new SimulationRunner(worldMap));
+    Input input = new Input();
 
-    public static int moveCount = 0; //todo: счетчик должен быть в отдельном классе или в другом а может и нет
-    public static void startSimulation() {
-        SimulationRunner runner = new SimulationRunner();
+    public int moveCount = 0;//todo: счетчик должен быть в отдельном классе или в другом а может и нет
 
-        renderer();
-        chooseMapSize();
-        configureSheepCount();
-        setWolfAttackPower();
-        setWolfSpeed();
-        initializeWorld();
-        runner.start();
+    public void startSimulation() {
 
-        OUT :
+        GameConfig configWorld = initAction.readConfig();
+        worldMap.setMapSize(configWorld.mapSize());
+        worldFactory.initializeWorld(configWorld);
+        thread.start();
+
         while (true) {
-            int menuChoice = readNumber();
+            int menuChoice = input.readNumber();
             if (menuChoice == 1) {
                 runner.pause();
                 while (true) {
-                    System.out.println("Продолжить нажми - " + CONTINUE_GAME +" Для выхода нажми - " + EXIT_GAME_FROM_PAUSE);
-                    int pauseMenuChoice = readNumber();
-                        if(pauseMenuChoice == CONTINUE_GAME){
-                            runner.resume();
-                            break;
-                        }
-
-                    if (pauseMenuChoice == EXIT_GAME_FROM_PAUSE) {
-                        runner.exitSimulation();
-                        break OUT;
+                    System.out.println("Продолжить нажми - " + CONTINUE_GAME);
+                    int pauseMenuChoice = input.readNumber();
+                    if (pauseMenuChoice == CONTINUE_GAME) {
+                        runner.resume();
+                        break;
                     }
                 }
             }
 
             if(menuChoice == 2){
-                spawnEntity(new Food());
+                spawn.spawnEntity(new Food());
                 continue;
             }
 
@@ -68,18 +61,29 @@ public class Simulation {
 
 }
 
-class SimulationRunner extends Thread {
+class SimulationRunner implements Runnable {
     private static final int PAUSE = 1;
     private static final int ADD_FOOD = 2;
     private static final int EXIT_GAME = 3;
-
     private volatile boolean running = true;
     private volatile boolean paused = false;
 
+    private final WorldMap map;
+
+    public SimulationRunner(WorldMap map){
+        this.map = map;
+
+    }
+    private final NextTurn nextTurn = new NextTurn();
+
+    RendererMap rendererMap = new RendererMap();
+
     public void run() {
-        renderer();
+        final Grass grass = new Grass(map);
+
+        rendererMap.renderer(map);
         System.out.println(PAUSE + " = пауза | " + ADD_FOOD + " = Добавить еще еды | " + EXIT_GAME + " = выход");
-        System.out.println("Количество шагов животных: " + Simulation.moveCount);
+        System.out.println("Количество шагов животных: " );
         try {
             Thread.sleep(2000);
         } catch (InterruptedException e) {
@@ -88,25 +92,19 @@ class SimulationRunner extends Thread {
 
         while (running) {
             if(!paused) {
-                if (isFoodAvailableFor()) {
+                if (grass.isFoodAvailableFor()) {
                     break;
                 }
-                nextTurn();
-                renderer();
+                nextTurn.nextTurn(map);
+                rendererMap.renderer(map);
                 System.out.println(PAUSE + " = пауза | " + ADD_FOOD + " = Добавить еще еды | " + EXIT_GAME + " = выход");
-                System.out.println("Количество шагов животных: " + Simulation.moveCount);
+                System.out.println("Количество шагов животных: ");
 
                 try {
                     Thread.sleep(2500);
                 } catch (InterruptedException e) {
                     throw new RuntimeException(e);
                 }
-                if (!BFS.movesThisTurn.isEmpty()) {
-                    BFS.movesThisTurn.clear();
-                    continue;
-                }
-                break;
-
             }
         }
     }

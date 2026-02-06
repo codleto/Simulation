@@ -1,5 +1,9 @@
 package simulation.entity.animal;
+import simulation.action.Grass;
+import simulation.action.Move;
+import simulation.algorithm.BFS;
 import simulation.entity.Entity;
+import simulation.map.WorldMap;
 
 public abstract class Creature extends Entity {
     private static final int MAX_HP = 100;
@@ -20,10 +24,13 @@ public abstract class Creature extends Entity {
 
     public abstract void setHp(int hp);
 
-    public abstract void makeMove();
+    public abstract void makeMove(WorldMap map);
+
     public abstract boolean eat(Entity entity);
 
     public void satisfiedItsHunger(){
         this.hp = MAX_HP;
     }
+
+
 }
