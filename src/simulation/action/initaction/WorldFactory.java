@@ -1,71 +1,91 @@
 package simulation.action.initaction;
 
-import simulation.action.turnaction.Spawn;
+import simulation.entity.Entity;
+import simulation.entity.animal.Creature;
 import simulation.entity.animal.Herbivore;
 import simulation.entity.animal.Predator;
 import simulation.entity.staticobject.Food;
 import simulation.entity.staticobject.Rock;
 import simulation.entity.staticobject.Tree;
+import simulation.map.Coordinates;
+import simulation.map.WorldMap;
+
+import java.util.Random;
+
 import static simulation.map.WorldMap.CreatureList;
 
 public class WorldFactory {
-    private int maxRockCount;
-    private int maxGrassCount;
-    private int maxTreeCount;
-    private final Spawn spawn;
+    private int herbivoreCount;
+    private int rockCount;
+    private int grassCount;
+    private int treeCount;
+    private final WorldMap map;
 
-    public WorldFactory(Spawn spawn){
-        this.spawn = spawn;
+    public WorldFactory(WorldMap map){
+        this.map = map;
     }
+    private final Random random = new Random();
 
+    public int getHerbivoreCount() {
+        return herbivoreCount;
+    }
     public int getMaxRockCount() {
-        return maxRockCount;
+        return rockCount;
     }
     public int getMaxGrassCount() {
-        return maxGrassCount;
+        return grassCount;
     }
     public int getMaxTreeCount() {
-        return maxTreeCount;
+        return treeCount;
     }
 
     public void initializeWorld(GameConfig config) {
+        int total = config.totalCells();
 
-        if (config.mapSize() == 4) {
-            maxRockCount = 4;
-            maxGrassCount = 6;
-            maxTreeCount = 4;
-        }
-        if (config.mapSize() == 5) {
-            maxRockCount = 6;
-            maxGrassCount = 8;
-            maxTreeCount = 6;
-        }
-        if (config.mapSize() == 10) {
-            maxRockCount = 11;
-            maxGrassCount = 15;
-            maxTreeCount = 11;
-        }
+        herbivoreCount = config.herbivoreCount();
+        rockCount = (int) (total * config.rockPercent());
+        grassCount = (int) (total * config.grassPercent());
+        treeCount = (int) (total * config.treePercent());
+
 
         CreatureList.add(new Predator(config.speed(), config.attack()));
-        spawn.spawnEntity(new Predator(config.speed(), config.attack()));
 
-
-        for (int i = 0; i < config.herbivoreCount(); i++) {
+        for (int i = 0; i < getHerbivoreCount(); i++) {
             CreatureList.add(new Herbivore());
-            spawn.spawnEntity(new Herbivore());
-
         }
 
         for (int i = 0; i < getMaxRockCount(); i++) {
-            spawn.spawnEntity(new Rock());
+            spawnEntity(new Rock());
         }
 
         for (int i = 0; i < getMaxGrassCount(); i++) {
-            spawn.spawnEntity(new Food());
+            spawnEntity(new Food());
         }
 
         for (int i = 0; i < getMaxTreeCount(); i++) {
-            spawn.spawnEntity(new Tree());
+            spawnEntity(new Tree());
+        }
+
+        for (Creature creature : CreatureList) {
+            spawnEntity(creature);
+        }
+    }
+    public void spawnEntity(Entity entity) {
+        Coordinates position = generateRandomPosition(map);
+
+        entity.setCoordinates(position);
+        map.addEntity(position, entity);
+    }
+
+    private Coordinates generateRandomPosition(WorldMap map) {
+
+        while (true) {
+            int vertical = random.nextInt(map.getMapVertical() + 1);
+            int horizontal = random.nextInt(map.getMapHorizontal() + 1);
+
+            if (map.getMap(new Coordinates(vertical, horizontal)) == null) {
+                return new Coordinates(vertical, horizontal);
+            }
         }
     }
 }

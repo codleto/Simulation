@@ -1,7 +1,4 @@
 package simulation.entity.animal;
-import simulation.action.Grass;
-import simulation.action.Move;
-import simulation.algorithm.BFS;
 import simulation.entity.Entity;
 import simulation.map.WorldMap;
 

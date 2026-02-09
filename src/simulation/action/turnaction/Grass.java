@@ -1,15 +1,11 @@
-package simulation.action;
+package simulation.action.turnaction;
 
 import simulation.entity.Entity;
 import simulation.entity.animal.Creature;
 import simulation.entity.animal.Herbivore;
 import simulation.map.WorldMap;
 
-import java.util.ArrayList;
-import java.util.List;
-
-
-public class Grass { //todo: проверить на S
+public class Grass {
     private final WorldMap map;
 
     public Grass(WorldMap map){

@@ -7,32 +7,36 @@ import java.util.*;
 public class WorldMap {
 
     private final Map<Coordinates, Entity> map = new HashMap<>();
-    private int mapSize = 5;
+    private final int mapVertical;
+    private final int mapHorizontal;
     public static List<Creature> CreatureList = new ArrayList<>();
 
-    public void setMapSize(int mapSize) {
-        if(mapSize >= 5){
-            this.mapSize = mapSize;
-        }
+    public WorldMap(int vertical, int horizontal){
+        this.mapVertical = vertical;
+        this.mapHorizontal = horizontal;
     }
 
-    public int getMapSize(){
-        return mapSize;
+    public int getMapVertical() {
+        return mapVertical;
     }
 
-    public void addEntity(Coordinates coordinates, Entity entity ){
+    public int getMapHorizontal() {
+        return mapHorizontal;
+    }
+
+    public void addEntity(Coordinates coordinates, Entity entity) {
         map.put(coordinates, entity);
     }
 
-    public void removeEntity(Coordinates coordinates){
+    public void removeEntity(Coordinates coordinates) {
         map.remove(coordinates);
     }
 
-    public Collection<Entity> getValue(){
+    public Collection<Entity> getValue() {
         return map.values();
     }
 
-    public Entity getEntity(Coordinates coordinates){
+    public Entity getEntity(Coordinates coordinates) {
         return map.get(coordinates);
     }
 
@@ -42,7 +46,7 @@ public class WorldMap {
 
 
     public boolean isInsideMap(Coordinates coordinates) {
-        return (coordinates.row > mapSize || coordinates.row < 0 || coordinates.column > mapSize || coordinates.column < 0);
+        return (coordinates.row > mapHorizontal || coordinates.row < 0 || coordinates.column > mapVertical || coordinates.column < 0);
     }
 
     public Entity getMap(int vertical, int horizontal) {

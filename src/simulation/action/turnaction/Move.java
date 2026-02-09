@@ -1,12 +1,15 @@
-package simulation.action;
+package simulation.action.turnaction;
 
 import simulation.entity.Entity;
 import simulation.entity.animal.Creature;
 import simulation.map.Coordinates;
 import simulation.map.WorldMap;
 
+import static simulation.map.WorldMap.CreatureList;
+
 public class Move {
     private final WorldMap map;
+    private int moveCount = 0;
 
     public Move(WorldMap map){
         this.map = map;
@@ -34,5 +37,16 @@ public class Move {
         map.removeEntity(from);
         mover.setCoordinates(to);
         map.addEntity(to, movingCreature);
+    }
+
+    public void makeMoveCreatures(WorldMap map){
+        for(Creature creature : CreatureList){
+            creature.makeMove(map);
+            moveCount ++;
+        }
+    }
+
+    public int getMoveCount(){
+        return moveCount;
     }
 }
