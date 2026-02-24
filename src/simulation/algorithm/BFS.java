@@ -3,7 +3,6 @@ package simulation.algorithm;
 import simulation.entity.Entity;
 import simulation.map.Coordinates;
 import simulation.map.WorldMap;
-
 import java.util.*;
 
 public class BFS {
@@ -41,10 +40,10 @@ public class BFS {
                 return;
             }
             Coordinates[] childCell = {
-                    new Coordinates(parentCell.row, parentCell.column + 1),
-                    new Coordinates(parentCell.row + 1, parentCell.column),
-                    new Coordinates(parentCell.row, parentCell.column - 1),
-                    new Coordinates(parentCell.row - 1, parentCell.column)
+                    new Coordinates(parentCell.getX(), parentCell.getY() + 1),
+                    new Coordinates(parentCell.getX() + 1, parentCell.getY()),
+                    new Coordinates(parentCell.getX(), parentCell.getY() - 1),
+                    new Coordinates(parentCell.getX() - 1, parentCell.getY())
             };
 
             for (Coordinates child : childCell) {

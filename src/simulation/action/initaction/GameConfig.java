@@ -1,9 +1,9 @@
 package simulation.action.initaction;
 
-public record GameConfig(int mapVertical, int mapHorizontal, int attack, int speed, int herbivoreCount,
+public record GameConfig(int mapX, int mapY, int attack, int speed, int herbivoreCount,
                          double grassPercent, double rockPercent, double treePercent) {
 
-    public GameConfig(int mapVertical, int mapHorizontal, int attack, int speed, int herbivoreCount,
+    public GameConfig(int mapX, int mapY, int attack, int speed, int herbivoreCount,
                       double grassPercent, double rockPercent, double treePercent) {
 
         double sum = ((double)herbivoreCount / 100) + grassPercent + rockPercent + treePercent;
@@ -11,13 +11,13 @@ public record GameConfig(int mapVertical, int mapHorizontal, int attack, int spe
             throw new IllegalArgumentException("Сущности не могут занимать больше 90% карты");
         }
 
-        if(mapVertical <= 0 || mapHorizontal <= 0){
+        if(mapX <= 0 || mapY <= 0){
              throw new IllegalArgumentException("Размер карты должен быть  больше 0");
         }
 
         if (herbivoreCount > 0 && attack > 0 && speed > 0 && grassPercent > 0 && rockPercent > 0 && treePercent > 0) {
-            this.mapVertical = mapVertical;
-            this.mapHorizontal = mapHorizontal;
+            this.mapX = mapX;
+            this.mapY = mapY;
             this.attack = attack;
             this.speed = speed;
             this.herbivoreCount = herbivoreCount;
@@ -25,8 +25,8 @@ public record GameConfig(int mapVertical, int mapHorizontal, int attack, int spe
             this.rockPercent = rockPercent;
             this.treePercent = treePercent;
         } else {
-            this.mapVertical = mapVertical;
-            this.mapHorizontal = mapHorizontal;
+            this.mapX = mapX;
+            this.mapY = mapY;
             this.attack = 1;
             this.speed = 1;
             this.herbivoreCount = 1;
@@ -37,6 +37,6 @@ public record GameConfig(int mapVertical, int mapHorizontal, int attack, int spe
     }
 
     public int totalCells(){
-        return mapVertical * mapHorizontal;
+        return mapX * mapY;
     }
 }

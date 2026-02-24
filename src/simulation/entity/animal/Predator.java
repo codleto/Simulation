@@ -1,7 +1,7 @@
 package simulation.entity.animal;
 
-import simulation.action.turnaction.Grass;
-import simulation.action.turnaction.Move;
+import simulation.action.turnaction.FoodService;
+import simulation.action.turnaction.MoveAction;
 import simulation.algorithm.BFS;
 import simulation.entity.Entity;
 import simulation.map.WorldMap;
@@ -38,25 +38,25 @@ public class Predator extends Creature {
     }
 
     public void makeMove(WorldMap map) {
-        BFS bfs = new BFS(map);
-        Move move = new Move(map);
-        Grass grass = new Grass(map);
+        final BFS bfs = new BFS(map);
+        final MoveAction moveAction = new MoveAction(map);
+        final FoodService foodService = new FoodService(map);
 
         int i = 1;
         while (getSpeed() >= i) {
 
-            if (grass.noFoodFor(this)) { // еды больше нет
+            if (foodService.noFoodFor(this)) {
                 return;
             }
 
-            bfs.searchForFood(this.getCoordinates(), Herbivore.class); // если только начали искать еду первый раз
+            bfs.searchForFood(this.getCoordinates(), Herbivore.class);
 
-            if (bfs.getPathToFood().isEmpty()) { // если все пусто
+            if (bfs.getPathToFood().isEmpty()) {
                 return;
             }
 
 
-            move.moveCreature(this.getCoordinates(), bfs.getPathToFood().getFirst(), this);
+            moveAction.moveCreature(this.getCoordinates(), bfs.getPathToFood().getFirst(), this);
             i++;
         }
     }

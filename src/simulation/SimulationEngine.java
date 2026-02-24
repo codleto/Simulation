@@ -1,11 +1,11 @@
 package simulation;
 
-import simulation.action.turnaction.Grass;
-import simulation.action.turnaction.Move;
+import simulation.action.turnaction.FoodService;
+import simulation.action.turnaction.MoveAction;
 import simulation.map.WorldMap;
 import simulation.util.RendererMap;
 
-class SimulationRunner implements Runnable {
+class SimulationEngine implements Runnable {
     private static final int PAUSE = 1;
     private static final int ADD_FOOD = 2;
     private static final int EXIT_GAME = 3;
@@ -14,21 +14,21 @@ class SimulationRunner implements Runnable {
 
     private final WorldMap map;
 
-    public SimulationRunner(WorldMap map) {
+    public SimulationEngine(WorldMap map) {
         this.map = map;
 
     }
 
-    RendererMap rendererMap = new RendererMap();
+    private final RendererMap rendererMap = new RendererMap();
 
     @Override
     public void run() {
-        final Grass grass = new Grass(map);
-        final Move move = new Move(map);
+        final FoodService foodService = new FoodService(map);
+        final MoveAction moveAction = new MoveAction(map);
 
         rendererMap.renderer(map);
         System.out.println(PAUSE + " = пауза | " + ADD_FOOD + " = Добавить еще еды | " + EXIT_GAME + " = выход");
-        System.out.println("Количество шагов животных: " + move.getMoveCount());
+        System.out.println("Количество шагов животных: " + moveAction.getMoveCount());
         try {
             Thread.sleep(2000);
         } catch (InterruptedException e) {
@@ -37,13 +37,13 @@ class SimulationRunner implements Runnable {
 
         while (running) {
             if (!paused) {
-                if (grass.isFoodAvailableFor()) {
+                if (foodService.isFoodAvailableFor()) {
                     break;
                 }
-                move.makeMoveCreatures(map);
+                moveAction.makeMoveCreatures(map);
                 rendererMap.renderer(map);
                 System.out.println(PAUSE + " = пауза | " + ADD_FOOD + " = Добавить еще еды | " + EXIT_GAME + " = выход");
-                System.out.println("Количество шагов животных: " + move.getMoveCount());
+                System.out.println("Количество шагов животных: " + moveAction.getMoveCount());
 
                 try {
                     Thread.sleep(2500);
@@ -52,6 +52,7 @@ class SimulationRunner implements Runnable {
                 }
             }
         }
+        exitSimulation();
     }
 
     public void exitSimulation() {

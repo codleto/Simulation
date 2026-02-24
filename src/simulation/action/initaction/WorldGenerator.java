@@ -4,7 +4,7 @@ import simulation.entity.Entity;
 import simulation.entity.animal.Creature;
 import simulation.entity.animal.Herbivore;
 import simulation.entity.animal.Predator;
-import simulation.entity.staticobject.Food;
+import simulation.entity.staticobject.Grass;
 import simulation.entity.staticobject.Rock;
 import simulation.entity.staticobject.Tree;
 import simulation.map.Coordinates;
@@ -12,19 +12,17 @@ import simulation.map.WorldMap;
 
 import java.util.Random;
 
-import static simulation.map.WorldMap.CreatureList;
-
-public class WorldFactory {
+public class WorldGenerator {
     private int herbivoreCount;
     private int rockCount;
     private int grassCount;
     private int treeCount;
     private final WorldMap map;
+    private final Random random = new Random();
 
-    public WorldFactory(WorldMap map){
+    public WorldGenerator(WorldMap map){
         this.map = map;
     }
-    private final Random random = new Random();
 
     public int getHerbivoreCount() {
         return herbivoreCount;
@@ -48,10 +46,10 @@ public class WorldFactory {
         treeCount = (int) (total * config.treePercent());
 
 
-        CreatureList.add(new Predator(config.speed(), config.attack()));
+        map.CreatureList.add(new Predator(config.speed(), config.attack()));
 
         for (int i = 0; i < getHerbivoreCount(); i++) {
-            CreatureList.add(new Herbivore());
+            map.CreatureList.add(new Herbivore());
         }
 
         for (int i = 0; i < getMaxRockCount(); i++) {
@@ -59,14 +57,14 @@ public class WorldFactory {
         }
 
         for (int i = 0; i < getMaxGrassCount(); i++) {
-            spawnEntity(new Food());
+            spawnEntity(new Grass());
         }
 
         for (int i = 0; i < getMaxTreeCount(); i++) {
             spawnEntity(new Tree());
         }
 
-        for (Creature creature : CreatureList) {
+        for (Creature creature : map.CreatureList) {
             spawnEntity(creature);
         }
     }
@@ -80,11 +78,11 @@ public class WorldFactory {
     private Coordinates generateRandomPosition(WorldMap map) {
 
         while (true) {
-            int vertical = random.nextInt(map.getMapVertical() + 1);
-            int horizontal = random.nextInt(map.getMapHorizontal() + 1);
+            int x = random.nextInt(map.getMapX() + 1);
+            int y = random.nextInt(map.getMapY() + 1);
 
-            if (map.getMap(new Coordinates(vertical, horizontal)) == null) {
-                return new Coordinates(vertical, horizontal);
+            if (map.getMap(new Coordinates(x, y)) == null) {
+                return new Coordinates(x, y);
             }
         }
     }

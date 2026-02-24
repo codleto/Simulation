@@ -7,21 +7,21 @@ import java.util.*;
 public class WorldMap {
 
     private final Map<Coordinates, Entity> map = new HashMap<>();
-    private final int mapVertical;
-    private final int mapHorizontal;
-    public static List<Creature> CreatureList = new ArrayList<>();
+    private final int mapX;
+    private final int mapY;
+    public final List<Creature> CreatureList = new ArrayList<>();
 
-    public WorldMap(int vertical, int horizontal){
-        this.mapVertical = vertical;
-        this.mapHorizontal = horizontal;
+    public WorldMap(int x, int y){
+        this.mapX = x;
+        this.mapY = y;
     }
 
-    public int getMapVertical() {
-        return mapVertical;
+    public int getMapX() {
+        return mapX;
     }
 
-    public int getMapHorizontal() {
-        return mapHorizontal;
+    public int getMapY() {
+        return mapY;
     }
 
     public void addEntity(Coordinates coordinates, Entity entity) {
@@ -40,17 +40,17 @@ public class WorldMap {
         return map.get(coordinates);
     }
 
-    public Entity getEntity(int row, int column) {
-        return map.get(new Coordinates(row, column));
+    public Entity getEntity(int x, int y) {
+        return map.get(new Coordinates(x, y));
     }
 
 
     public boolean isInsideMap(Coordinates coordinates) {
-        return (coordinates.row > mapHorizontal || coordinates.row < 0 || coordinates.column > mapVertical || coordinates.column < 0);
+        return (coordinates.getX() > mapY || coordinates.getX() < 0 || coordinates.getY() > mapX || coordinates.getY() < 0);
     }
 
-    public Entity getMap(int vertical, int horizontal) {
-        return map.get(new Coordinates(vertical, horizontal));
+    public Entity getMap(int x, int y) {
+        return map.get(new Coordinates(x, y));
     }
 
     public Entity getMap(Coordinates coordinates) {

@@ -1,23 +1,23 @@
 package simulation;
 
 import simulation.action.initaction.*;
-import simulation.entity.staticobject.Food;
+import simulation.entity.staticobject.Grass;
 import simulation.map.WorldMap;
 
 import java.util.Scanner;
 
-public class Simulation {
+public class SimulationController {
     private static final int CONTINUE_GAME = 1;
-    WorldMap worldMap = new WorldMap(5,5);
-    WorldFactory worldFactory = new WorldFactory(worldMap);
-    InitAction initAction = new InitAction();
-    SimulationRunner runner = new SimulationRunner(worldMap);
-    Thread thread = new Thread(runner);
+    private final WorldMap worldMap = new WorldMap(5,5);
+    private final WorldGenerator worldGenerator = new WorldGenerator(worldMap);
+    private final InitAction initAction = new InitAction();
+    private final SimulationEngine runner = new SimulationEngine(worldMap);
+    private final Thread thread = new Thread(runner);
 
     public void startSimulation() {
 
-        GameConfig configWorld = initAction.readConfig(worldMap);
-        worldFactory.initializeWorld(configWorld);
+        final GameConfig configWorld = initAction.readConfig(worldMap);
+        worldGenerator.initializeWorld(configWorld);
         thread.start();
 
         while (true) {
@@ -35,7 +35,7 @@ public class Simulation {
             }
 
             if(menuChoice == 2){
-                worldFactory.spawnEntity(new Food());
+                worldGenerator.spawnEntity(new Grass());
                 continue;
             }
 
@@ -53,7 +53,7 @@ public class Simulation {
     }
 
     private int readNumber(){
-        Scanner scanner = new Scanner(System.in);
+        final Scanner scanner = new Scanner(System.in);
         while (true){
             String input = scanner.nextLine().trim();
             if(input.matches("\\d+")){

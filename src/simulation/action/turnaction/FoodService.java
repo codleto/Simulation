@@ -5,10 +5,10 @@ import simulation.entity.animal.Creature;
 import simulation.entity.animal.Herbivore;
 import simulation.map.WorldMap;
 
-public class Grass {
+public class FoodService {
     private final WorldMap map;
 
-    public Grass(WorldMap map){
+    public FoodService(WorldMap map){
         this.map = map;
     }
 
@@ -23,7 +23,7 @@ public class Grass {
 
     public boolean noFoodFor(Creature creature){
         for(Entity entry : map.getValue()){
-            if(entry != creature && creature.eat(entry)){
+            if(creature.eat(entry)){
                 return false;
             }
         }
